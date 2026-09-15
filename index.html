@@ -1,0 +1,86 @@
+
+    <!DOCTYPE html>
+    <html lang="da">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fynsk Kystfiske-Analyzer</title>
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
+            h1 { text-align: center; color: #38bdf8; margin-bottom: 5px; font-size: 1.8em; }
+            .timestamp { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; }
+            
+            .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+            .card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
+            
+            .coords { color: #94a3b8; font-size: 0.85em; font-family: monospace; margin-bottom: 15px; }
+            
+            .card.optimal { border-left-color: #22c55e; }
+            .card.moderate { border-left-color: #eab308; }
+            .card.warning { border-left-color: #f97316; }
+            .card.bad { border-left-color: #ef4444; }
+            
+            .info-list { background: #0f172a; padding: 12px; border-radius: 8px; margin: 15px 0; }
+            .info-list p { margin: 6px 0; font-size: 1em; }
+            
+            .status { font-size: 1.1em; margin-top: 10px; }
+            .note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
+        </style>
+    </head>
+    <body>
+        <h1>🎣 Kystfiske-Analyzer</h1>
+        <div class="timestamp">Opdateret: 15-09-2026 kl. 17:13</div>
+        
+        
+        <div class="card optimal">
+            <h2>Knudshoved / Nyborg (Østfyn)</h2>
+            <div class="coords">🌍 55.297° N, 10.853° E</div>
+            <div class="info-list">
+                <p><strong>Vind:</strong> 3.09 m/s (stød 5.66 m/s) fra S</p>
+                <p><strong>Vandstand:</strong> 15.0 cm</p>
+                <p><strong>Vandtemp:</strong> 17.1 °C</p>
+            </div>
+            <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
+            <p class="note">Vind fra S giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
+        </div>
+        
+        <div class="card optimal">
+            <h2>Flyvesandet (Nordfyn)</h2>
+            <div class="coords">🌍 55.615° N, 10.297° E</div>
+            <div class="info-list">
+                <p><strong>Vind:</strong> 4.72 m/s (stød 7.65 m/s) fra S</p>
+                <p><strong>Vandstand:</strong> 15.0 cm</p>
+                <p><strong>Vandtemp:</strong> 16.6 °C</p>
+            </div>
+            <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
+            <p class="note">Vind fra S giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
+        </div>
+        
+        <div class="card moderate">
+            <h2>Helnæs Fyr (Sydvestfyn)</h2>
+            <div class="coords">🌍 55.142° N, 9.998° E</div>
+            <div class="info-list">
+                <p><strong>Vind:</strong> 3.09 m/s (stød 5.66 m/s) fra S</p>
+                <p><strong>Vandstand:</strong> 17.0 cm</p>
+                <p><strong>Vandtemp:</strong> 17.1 °C</p>
+            </div>
+            <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
+            <p class="note">Vind fra S direkte ind på kysten. Skaber god sløring i vandet, men modvind kan gøre kastene tunge. Høj vandstand (+17.0 cm): Fisken kan trække helt ind på det lave vand.</p>
+        </div>
+        
+        <div class="card moderate">
+            <h2>Kerteminde Nordstrand (Østfyn)</h2>
+            <div class="coords">🌍 55.466° N, 10.658° E</div>
+            <div class="info-list">
+                <p><strong>Vind:</strong> 3.09 m/s (stød 5.66 m/s) fra S</p>
+                <p><strong>Vandstand:</strong> 15.0 cm</p>
+                <p><strong>Vandtemp:</strong> 17.1 °C</p>
+            </div>
+            <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
+            <p class="note">Vind fra S direkte ind på kysten. Skaber god sløring i vandet, men modvind kan gøre kastene tunge.</p>
+        </div>
+        
+        
+    </body>
+    </html>
+    
