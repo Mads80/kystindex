@@ -33,34 +33,49 @@
     </head>
     <body>
         <h1>🎣 Kystvejr Fyn</h1>
-        <div class="timestamp">Opdateret: 15-09-2026 kl. 21:46</div>
+        <div class="timestamp">Opdateret: 15-09-2026 kl. 21:56</div>
         
         
         <div class="card optimal">
-            <h2>Knudshoved / Nyborg (Østfyn)</h2>
-            <div class="coords">📍 55.297° N, 10.853° E</div>
+            <h2>Kerteminde Nordstrand (Østfyn)</h2>
+            <div class="coords">📍 55.466° N, 10.658° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.09 m/s (stød 4.63 m/s) fra S</p>
-                <p><strong>Vandstand:</strong> 11.0 cm (➡️ Stabilt)</p>
+                <p><strong>Vind:</strong> 3.6 m/s (stød 5.14 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 12.0 cm (➡️ Stabilt)</p>
                 <p><strong>Vandtemp:</strong> 16.9 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart0"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra S giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
+            <p class="note">Vind fra SV giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
+        </div>
+        
+        <div class="card optimal">
+            <h2>Knudshoved / Nyborg (Østfyn)</h2>
+            <div class="coords">📍 55.297° N, 10.853° E</div>
+            <div class="info-list">
+                <p><strong>Vind:</strong> 3.6 m/s (stød 5.14 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 12.0 cm (➡️ Stabilt)</p>
+                <p><strong>Vandtemp:</strong> 16.9 °C</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="waterChart1"></canvas>
+            </div>
+            <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
+            <p class="note">Vind fra SV giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
         </div>
         
         <div class="card optimal">
             <h2>Flyvesandet (Nordfyn)</h2>
             <div class="coords">📍 55.615° N, 10.297° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.2 m/s (stød 4.68 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 11.0 cm (➡️ Stabilt)</p>
+                <p><strong>Vind:</strong> 3.2 m/s (stød 4.61 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 12.0 cm (➡️ Stabilt)</p>
                 <p><strong>Vandtemp:</strong> N/A °C</p>
             </div>
             <div class="chart-container">
-                <canvas id="waterChart1"></canvas>
+                <canvas id="waterChart2"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
             <p class="note">Vind fra SV giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
@@ -70,30 +85,15 @@
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.09 m/s (stød 4.63 m/s) fra S</p>
+                <p><strong>Vind:</strong> 3.6 m/s (stød 5.14 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 12.0 cm (➡️ Stabilt)</p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
-            </div>
-            <div class="chart-container">
-                <canvas id="waterChart2"></canvas>
-            </div>
-            <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra S direkte ind på kysten. Skaber god sløring i vandet, men modvind kan gøre kastene tunge.</p>
-        </div>
-        
-        <div class="card moderate">
-            <h2>Kerteminde Nordstrand (Østfyn)</h2>
-            <div class="coords">📍 55.466° N, 10.658° E</div>
-            <div class="info-list">
-                <p><strong>Vind:</strong> 3.09 m/s (stød 4.63 m/s) fra S</p>
-                <p><strong>Vandstand:</strong> 11.0 cm (➡️ Stabilt)</p>
-                <p><strong>Vandtemp:</strong> 16.9 °C</p>
+                <p><strong>Vandtemp:</strong> 17.1 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart3"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra S direkte ind på kysten. Skaber god sløring i vandet, men modvind kan gøre kastene tunge.</p>
+            <p class="note">Vind fra SV direkte ind på kysten. Skaber god sløring i vandet, men modvind kan gøre kastene tunge.</p>
         </div>
         
 
@@ -103,9 +103,9 @@
         new Chart(ctx0, {
             type: 'line',
             data: {
-                labels: [11.0, 12.0, 13.0, 11.0],
+                labels: [12.0, 13.0, 11.0, 12.0],
                 datasets: [{
-                    data: [11.0, 12.0, 13.0, 11.0],
+                    data: [12.0, 13.0, 11.0, 12.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
@@ -132,9 +132,9 @@
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: [11.0, 12.0, 13.0, 11.0],
+                labels: [12.0, 13.0, 11.0, 12.0],
                 datasets: [{
-                    data: [11.0, 12.0, 13.0, 11.0],
+                    data: [12.0, 13.0, 11.0, 12.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
@@ -161,9 +161,9 @@
         new Chart(ctx2, {
             type: 'line',
             data: {
-                labels: [11.0, 10.0, 11.0, 12.0],
+                labels: [12.0, 13.0, 11.0, 12.0],
                 datasets: [{
-                    data: [11.0, 10.0, 11.0, 12.0],
+                    data: [12.0, 13.0, 11.0, 12.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
@@ -190,9 +190,9 @@
         new Chart(ctx3, {
             type: 'line',
             data: {
-                labels: [11.0, 12.0, 13.0, 11.0],
+                labels: [10.0, 11.0, 12.0, 12.0],
                 datasets: [{
-                    data: [11.0, 12.0, 13.0, 11.0],
+                    data: [10.0, 11.0, 12.0, 12.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
