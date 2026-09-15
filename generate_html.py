@@ -122,7 +122,7 @@ def main():
         cards_html += f"""
         <div class="card {r['css_class']}">
             <h2>{r['spot']}</h2>
-            <div class="coords">🌍 {r['coords']}</div>
+            <div class="coords">📍 {r['coords']}</div>
             <div class="info-list">
                 <p><strong>Vind:</strong> {r['hastighed']} m/s (stød {r['stod']} m/s) fra {r['kompas']}</p>
                 <p><strong>Vandstand:</strong> {r['vandstand']} cm</p>
