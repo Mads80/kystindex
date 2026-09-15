@@ -57,27 +57,46 @@ def hent_dmi_met(station_id):
         print(f"Fejl ved hentning af vejr for {station_id}: {e}")
     return None
 
-def hent_dmi_ocean_val(station_id, target_param):
-    params = {"stationId": station_id, "limit": 30}
+def hent_dmi_ocean_historik(station_id, target_param, limit=12):
+    """Henter en liste af de seneste målinger til trend og graf (ca. de sidste 2 timer)."""
+    params = {"stationId": station_id, "limit": limit}
     try:
         res = requests.get(OCEAN_URL, params=params, timeout=10)
         if res.status_code == 200:
             features = res.json().get("features", [])
+            vals = []
             for item in features:
                 props = item["properties"]
-                param = props["parameterId"]
-                if param == target_param:
-                    return props["value"]
+                if props["parameterId"] == target_param:
+                    vals.append(props["value"])
+            return vals
     except Exception as e:
-        print(f"Fejl ved hentning af havdata for {station_id}: {e}")
-    return "N/A"
+        print(f"Fejl ved hentning af hav-historik for {station_id}: {e}")
+    return []
 
-def evaluer_kyst(spot_navn, coords, met_data, vandstand, temp, lae_vinde):
+def hent_dmi_ocean_val(station_id, target_param):
+    vals = hent_dmi_ocean_historik(station_id, target_param, limit=1)
+    return vals[0] if vals else "N/A"
+
+def evaluer_kyst(spot_navn, coords, met_data, vandstand_historik, temp, lae_vinde):
     hastighed = met_data.get("wind_speed", 0) if met_data else 0
     stod = met_data.get("wind_max", 0) if met_data else 0
     grader = met_data.get("wind_dir", 0) if met_data else 0
     kompas = grader_til_kompas(grader) if met_data else "N/A"
     
+    # Aktuel vandstand er den nyeste (første i listen)
+    vandstand = vandstand_historik[0] if vandstand_historik else "N/A"
+    
+    # Udregn trend (sammenlign nu med ca. 1 time siden, f.eks. index 5)
+    trend_symbol, trend_tekst = "➡️", "Stabilt"
+    if isinstance(vandstand, (int, float)) and len(vandstand_historik) >= 6:
+        gammel_vaerdi = vandstand_historik[5]
+        diff = vandstand - gammel_vaerdi
+        if diff > 0.8:
+            trend_symbol, trend_tekst = "↗", "Stigende"
+        elif diff < -0.8:
+            trend_symbol, trend_tekst = "↘", "Faldende"
+
     if hastighed > 10:
         status, css_class, score = "❌ DÅRLIG (For kraftig vind)", "bad", 4
         note = f"Vind på {hastighed} m/s giver for meget opslået vand og løsrevet tang. Svært at fiske effektivt."
@@ -97,10 +116,13 @@ def evaluer_kyst(spot_navn, coords, met_data, vandstand, temp, lae_vinde):
         elif vandstand < -15:
             note += f" Lav vandstand ({vandstand} cm): Søg ud mod dybere pynter, rev og skrænter."
 
+    # Forbered data til grafen (vender listen, så ældste er til venstre og nyeste til højre)
+    graf_data = list(reversed(vandstand_historik)) if vandstand_historik else []
+
     return {
         "spot": spot_navn, "coords": coords, "hastighed": hastighed, "stod": stod,
-        "kompas": kompas, "vandstand": vandstand, "temp": temp,
-        "status": status, "css_class": css_class, "note": note, "score": score
+        "kompas": kompas, "vandstand": vandstand, "trend_symbol": trend_symbol, "trend_tekst": trend_tekst,
+        "temp": temp, "status": status, "css_class": css_class, "note": note, "score": score, "graf_data": graf_data
     }
 
 def main():
@@ -108,29 +130,66 @@ def main():
     
     for spot_navn, info in SPOTS.items():
         met_data = hent_dmi_met(info["met_station"])
-        vandstand = hent_dmi_ocean_val(info["ocean_level_st"], "sealev_ln")
+        vandstand_historik = hent_dmi_ocean_historik(info["ocean_level_st"], "sealev_ln", limit=12)
         temp = hent_dmi_ocean_val(info["ocean_temp_st"], "tw")
         
-        vurdering = evaluer_kyst(spot_navn, info["coords"], met_data, vandstand, temp, info["lae_vinde"])
+        vurdering = evaluer_kyst(spot_navn, info["coords"], met_data, vandstand_historik, temp, info["lae_vinde"])
         results.append(vurdering)
 
-    # HER ER MAGIEN! Vi sorterer results-listen, så det laveste 'score'-tal kommer først (1 = OPTIMAL, osv.)
     results.sort(key=lambda x: x["score"])
 
     cards_html = ""
-    for r in results:
+    chart_scripts = ""
+    
+    for i, r in enumerate(results):
+        chart_id = f"waterChart{i}"
         cards_html += f"""
         <div class="card {r['css_class']}">
             <h2>{r['spot']}</h2>
             <div class="coords">📍 {r['coords']}</div>
             <div class="info-list">
                 <p><strong>Vind:</strong> {r['hastighed']} m/s (stød {r['stod']} m/s) fra {r['kompas']}</p>
-                <p><strong>Vandstand:</strong> {r['vandstand']} cm</p>
+                <p><strong>Vandstand:</strong> {r['vandstand']} cm ({r['trend_symbol']} {r['trend_tekst']})</p>
                 <p><strong>Vandtemp:</strong> {r['temp']} °C</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="{chart_id}"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> {r['status']}</p>
             <p class="note">{r['note']}</p>
         </div>
+        """
+        
+        # Generer JavaScript til at tegne den individuelle graf via Chart.js
+        chart_scripts += f"""
+        const ctx{i} = document.getElementById('{chart_id}').getContext('2d');
+        new Chart(ctx{i}, {{
+            type: 'line',
+            data: {{
+                labels: {r['graf_data']},
+                datasets: [{{
+                    data: {r['graf_data']},
+                    borderColor: '#38bdf8',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(56, 189, 248, 0.05)'
+                }}]
+            }},
+            options: {{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {{ legend: {{ display: false }}, tooltip: {{ enabled: false }}}},
+                scales: {{
+                    x: {{ display: false }},
+                    y: {{ 
+                        grid: {{ color: 'rgba(255, 255, 255, 0.05)' }},
+                        ticks: {{ color: '#64748b', font: {{ size: 10 }} }}
+                    }}
+                }}
+            }}
+        }});
         """
 
     nu = datetime.now().strftime("%d-%m-%Y kl. %H:%M")
@@ -141,7 +200,9 @@ def main():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fynsk Kystfiske-Analyzer</title>
+        <title>Kystvejr Fyn</title>
+        <!-- Chart.js CDN til grafer -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }}
             h1 {{ text-align: center; color: #38bdf8; margin-bottom: 5px; font-size: 1.8em; }}
@@ -160,16 +221,21 @@ def main():
             .info-list {{ background: #0f172a; padding: 12px; border-radius: 8px; margin: 15px 0; }}
             .info-list p {{ margin: 6px 0; font-size: 1em; }}
             
+            .chart-container {{ position: relative; height: 90px; margin: 15px 0; background: #0f172a; border-radius: 8px; padding: 5px; }}
+            
             .status {{ font-size: 1.1em; margin-top: 10px; }}
             .note {{ color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }}
         </style>
     </head>
     <body>
-        <h1>🎣 Kystfiske-Analyzer</h1>
+        <h1>🎣 Kystvejr Fyn</h1>
         <div class="timestamp">Opdateret: {nu}</div>
         
         {cards_html}
-        
+
+        <script>
+            {chart_scripts}
+        </script>
     </body>
     </html>
     """
@@ -177,7 +243,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret {nu} - Spots er nu sorteret!")
+    print(f"Succes! index.html blev genereret {nu} med grafer og vandstandstrend.")
 
 if __name__ == "__main__":
     main()

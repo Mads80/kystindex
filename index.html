@@ -4,7 +4,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fynsk Kystfiske-Analyzer</title>
+        <title>Kystvejr Fyn</title>
+        <!-- Chart.js CDN til grafer -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
             h1 { text-align: center; color: #38bdf8; margin-bottom: 5px; font-size: 1.8em; }
@@ -23,22 +25,27 @@
             .info-list { background: #0f172a; padding: 12px; border-radius: 8px; margin: 15px 0; }
             .info-list p { margin: 6px 0; font-size: 1em; }
             
+            .chart-container { position: relative; height: 90px; margin: 15px 0; background: #0f172a; border-radius: 8px; padding: 5px; }
+            
             .status { font-size: 1.1em; margin-top: 10px; }
             .note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
         </style>
     </head>
     <body>
-        <h1>🎣 Kystfiske-Analyzer</h1>
-        <div class="timestamp">Opdateret: 15-09-2026 kl. 21:05</div>
+        <h1>🎣 Kystvejr Fyn</h1>
+        <div class="timestamp">Opdateret: 15-09-2026 kl. 21:15</div>
         
         
         <div class="card optimal">
             <h2>Kerteminde Nordstrand (Østfyn)</h2>
             <div class="coords">📍 55.466° N, 10.658° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.6 m/s (stød 5.14 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 11.0 cm</p>
-                <p><strong>Vandtemp:</strong> 17.0 °C</p>
+                <p><strong>Vind:</strong> 3.6 m/s (stød 5.66 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 11.0 cm (➡️ Stabilt)</p>
+                <p><strong>Vandtemp:</strong> N/A °C</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="waterChart0"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
             <p class="note">Vind fra SV giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
@@ -48,9 +55,12 @@
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.6 m/s (stød 5.14 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 11.0 cm</p>
-                <p><strong>Vandtemp:</strong> 17.0 °C</p>
+                <p><strong>Vind:</strong> 3.6 m/s (stød 5.66 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 11.0 cm (➡️ Stabilt)</p>
+                <p><strong>Vandtemp:</strong> N/A °C</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
             <p class="note">Vind fra SV giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
@@ -60,9 +70,12 @@
             <h2>Flyvesandet (Nordfyn)</h2>
             <div class="coords">📍 55.615° N, 10.297° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 0 m/s (stød 0 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 11.0 cm</p>
+                <p><strong>Vind:</strong> 2.5 m/s (stød 4.47 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 11.0 cm (➡️ Stabilt)</p>
                 <p><strong>Vandtemp:</strong> 16.6 °C</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="waterChart2"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
             <p class="note">Vind fra SV giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!</p>
@@ -72,15 +85,137 @@
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.6 m/s (stød 5.14 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 11.0 cm</p>
-                <p><strong>Vandtemp:</strong> 17.1 °C</p>
+                <p><strong>Vind:</strong> 3.6 m/s (stød 5.66 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 10.0 cm (➡️ Stabilt)</p>
+                <p><strong>Vandtemp:</strong> N/A °C</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="waterChart3"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
             <p class="note">Vind fra SV direkte ind på kysten. Skaber god sløring i vandet, men modvind kan gøre kastene tunge.</p>
         </div>
         
+
+        <script>
+            
+        const ctx0 = document.getElementById('waterChart0').getContext('2d');
+        new Chart(ctx0, {
+            type: 'line',
+            data: {
+                labels: [12.0, 12.0, 11.0, 11.0],
+                datasets: [{
+                    data: [12.0, 12.0, 11.0, 11.0],
+                    borderColor: '#38bdf8',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(56, 189, 248, 0.05)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: false }},
+                scales: {
+                    x: { display: false },
+                    y: { 
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b', font: { size: 10 } }
+                    }
+                }
+            }
+        });
         
+        const ctx1 = document.getElementById('waterChart1').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: [12.0, 12.0, 11.0, 11.0],
+                datasets: [{
+                    data: [12.0, 12.0, 11.0, 11.0],
+                    borderColor: '#38bdf8',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(56, 189, 248, 0.05)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: false }},
+                scales: {
+                    x: { display: false },
+                    y: { 
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+        
+        const ctx2 = document.getElementById('waterChart2').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: [12.0, 12.0, 11.0, 11.0],
+                datasets: [{
+                    data: [12.0, 12.0, 11.0, 11.0],
+                    borderColor: '#38bdf8',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(56, 189, 248, 0.05)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: false }},
+                scales: {
+                    x: { display: false },
+                    y: { 
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+        
+        const ctx3 = document.getElementById('waterChart3').getContext('2d');
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: [11.0, 11.0, 11.0, 10.0],
+                datasets: [{
+                    data: [11.0, 11.0, 11.0, 10.0],
+                    borderColor: '#38bdf8',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(56, 189, 248, 0.05)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: false }},
+                scales: {
+                    x: { display: false },
+                    y: { 
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+        
+        </script>
     </body>
     </html>
     
