@@ -1,7 +1,6 @@
 import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
-
 import requests
 
 MET_URL = "https://opendataapi.dmi.dk/v2/metObs/collections/observation/items"
@@ -10,7 +9,7 @@ OCEAN_URL = "https://opendataapi.dmi.dk/v2/oceanObs/collections/observation/item
 SPOTS = {
     "Helnæs Fyr (Sydvestfyn)": {
         "coords": "55.142° N, 9.998° E",
-        "met_station": "06123",      # Vind: Assens/Torø (Perfekt til Vest/Sydfyn)
+        "met_station": "06123",      # Vind: Assens/Torø 
         "ocean_level_st": "9020201", # Vandstand: Assens Havn I
         "ocean_temp_st": "23289",    # Temp: Fredericia Havn II
         "lae_vinde": ["Ø", "SØ", "NØ"]
@@ -172,7 +171,6 @@ def main():
     for i, r in enumerate(results):
         chart_id = f"waterChart{i}"
         
-        # Sikrer gyldig JavaScript syntax
         json_tider = json.dumps(r['graf_tider'])
         json_data = json.dumps(r['graf_data'])
 
@@ -238,7 +236,6 @@ def main():
         }});
         """
 
-    # Henter lokal dansk tid
     nu = datetime.now(ZoneInfo("Europe/Copenhagen")).strftime("%d-%m-%Y kl. %H:%M")
 
     full_html = f"""
@@ -247,12 +244,22 @@ def main():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Kystvejr Fyn</title>
+        <title>KYSTINDEX Fyn</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }}
-            h1 {{ text-align: center; color: #38bdf8; margin-bottom: 5px; font-size: 1.8em; }}
-            .timestamp {{ text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; }}
+            
+            /* Logo Styling */
+            .header-container {{ text-align: center; margin-top: 10px; margin-bottom: 5px; }}
+            .logo {{ 
+                max-width: 180px; 
+                height: auto; 
+                border-radius: 50%; 
+                border: 4px solid #1e293b; 
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+            }}
+            
+            .timestamp {{ text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; margin-top: 10px; }}
             
             .card {{ background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }}
             .card h2 {{ margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }}
@@ -280,7 +287,9 @@ def main():
         </style>
     </head>
     <body>
-        <h1>🎣 Kystvejr Fyn</h1>
+        <div class="header-container">
+            <img src="logo.png" alt="KYSTINDEX" class="logo">
+        </div>
         <div class="timestamp">Opdateret: {nu}</div>
         
         {cards_html}
@@ -299,7 +308,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret {nu} med korrekte tider og individuelle stationer.")
+    print(f"Succes! index.html blev genereret med 'logo.png'.")
 
 if __name__ == "__main__":
     main()
