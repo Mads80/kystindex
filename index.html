@@ -4,12 +4,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Kystvejr Fyn</title>
+        <title>KYSTINDEX Fyn</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
-            h1 { text-align: center; color: #38bdf8; margin-bottom: 5px; font-size: 1.8em; }
-            .timestamp { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; }
+            
+            /* Logo Styling */
+            .header-container { text-align: center; margin-top: 10px; margin-bottom: 5px; }
+            .logo { 
+                max-width: 180px; 
+                height: auto; 
+                border-radius: 50%; 
+                border: 4px solid #1e293b; 
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+            }
+            
+            .timestamp { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; margin-top: 10px; }
             
             .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
             .card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
@@ -37,8 +47,10 @@
         </style>
     </head>
     <body>
-        <h1>🎣 Kystvejr Fyn</h1>
-        <div class="timestamp">Opdateret: 16-09-2026 kl. 09:20</div>
+        <div class="header-container">
+            <img src="logo.png" alt="KYSTINDEX" class="logo">
+        </div>
+        <div class="timestamp">Opdateret: 16-09-2026 kl. 09:30</div>
         
         
         <div class="card optimal">
@@ -60,22 +72,22 @@
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 2.57 m/s (stød 4.88 m/s) fra V</p>
-                <p><strong>Vandstand:</strong> 25.0 cm <span class="trend">(↓ Faldende)</span></p>
+                <p><strong>Vind:</strong> 2.73 m/s (stød 4.32 m/s) fra V</p>
+                <p><strong>Vandstand:</strong> 24.0 cm <span class="trend">(↓ Faldende)</span></p>
                 <p><strong>Vandtemp:</strong> N/A °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra V (2.57 m/s) giver fine, rolige kasteforhold. Vandstanden er +25.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
+            <p class="note">Vind fra V (2.73 m/s) giver fine, rolige kasteforhold. Vandstanden er +24.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
         </div>
         
         <div class="card moderate">
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 4.68 m/s (stød 6.47 m/s) fra V</p>
+                <p><strong>Vind:</strong> 3.97 m/s (stød 5.78 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.9 °C</p>
             </div>
@@ -83,7 +95,7 @@
                 <canvas id="waterChart2"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra V (4.68 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
+            <p class="note">Vind fra V (3.97 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
         </div>
         
         <div class="card moderate">
@@ -156,9 +168,9 @@
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ["06:40", "06:50", "07:00", "07:10", "07:20", "07:30", "07:40", "07:50", "08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10"],
+                labels: ["06:50", "07:00", "07:10", "07:20", "07:30", "07:40", "07:50", "08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20"],
                 datasets: [{
-                    data: [36.0, 36.0, 35.0, 34.0, 33.0, 32.0, 31.0, 30.0, 29.0, 29.0, 28.0, 27.0, 27.0, 26.0, 25.0, 25.0],
+                    data: [36.0, 35.0, 34.0, 33.0, 32.0, 31.0, 30.0, 29.0, 29.0, 28.0, 27.0, 27.0, 26.0, 25.0, 25.0, 24.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
