@@ -37,6 +37,50 @@ SPOTS = {
     }
 }
 
+# --- SKUDSIKKER CSS VARIABEL ---
+CSS = """
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
+
+.header-container { text-align: center; margin-top: 15px; margin-bottom: 5px; }
+
+/* Simpelt logo - Samme størrelse alle steder */
+.logo { 
+    width: 100%;
+    max-width: 240px; /* Lidt større end de oprindelige 180px */
+    aspect-ratio: 1 / 1; 
+    object-fit: cover; 
+    border-radius: 50%; 
+    border: 4px solid #1e293b; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+}
+
+.timestamp { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; margin-top: 15px; }
+
+.card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+.card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
+
+.coords { color: #94a3b8; font-size: 0.85em; font-family: monospace; margin-bottom: 15px; }
+
+.card.optimal { border-left-color: #22c55e; }
+.card.moderate { border-left-color: #eab308; }
+.card.warning { border-left-color: #f97316; }
+.card.bad { border-left-color: #ef4444; }
+
+.info-list { background: #0f172a; padding: 12px; border-radius: 8px; margin: 15px 0; }
+.info-list p { margin: 6px 0; font-size: 1em; }
+
+.trend { color: #94a3b8; font-size: 0.9em; margin-left: 5px; }
+
+.chart-container { position: relative; height: 125px; margin: 15px 0; background: #0f172a; border-radius: 8px; padding: 8px; }
+
+.status { font-size: 1.1em; margin-top: 10px; }
+.note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
+
+.footer { text-align: center; color: #64748b; font-size: 0.85em; margin-top: 30px; margin-bottom: 20px; }
+.footer a { color: #38bdf8; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+"""
+
 def grader_til_kompas(grader):
     retninger = ["N", "NØ", "Ø", "SØ", "S", "SV", "V", "NV"]
     idx = int((grader + 22.5) // 45) % 8
@@ -247,43 +291,7 @@ def main():
         <title>KYSTINDEX Fyn</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
-            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }}
-            
-            /* Logo Styling */
-            .header-container {{ text-align: center; margin-top: 10px; margin-bottom: 5px; }}
-            .logo {{ 
-                max-width: 180px; 
-                height: auto; 
-                border-radius: 50%; 
-                border: 4px solid #1e293b; 
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
-            }}
-            
-            .timestamp {{ text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; margin-top: 10px; }}
-            
-            .card {{ background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }}
-            .card h2 {{ margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }}
-            
-            .coords {{ color: #94a3b8; font-size: 0.85em; font-family: monospace; margin-bottom: 15px; }}
-            
-            .card.optimal {{ border-left-color: #22c55e; }}
-            .card.moderate {{ border-left-color: #eab308; }}
-            .card.warning {{ border-left-color: #f97316; }}
-            .card.bad {{ border-left-color: #ef4444; }}
-            
-            .info-list {{ background: #0f172a; padding: 12px; border-radius: 8px; margin: 15px 0; }}
-            .info-list p {{ margin: 6px 0; font-size: 1em; }}
-            
-            .trend {{ color: #94a3b8; font-size: 0.9em; margin-left: 5px; }}
-            
-            .chart-container {{ position: relative; height: 125px; margin: 15px 0; background: #0f172a; border-radius: 8px; padding: 8px; }}
-            
-            .status {{ font-size: 1.1em; margin-top: 10px; }}
-            .note {{ color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }}
-            
-            .footer {{ text-align: center; color: #64748b; font-size: 0.85em; margin-top: 30px; margin-bottom: 20px; }}
-            .footer a {{ color: #38bdf8; text-decoration: none; }}
-            .footer a:hover {{ text-decoration: underline; }}
+{CSS}
         </style>
     </head>
     <body>
@@ -308,7 +316,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret med 'logo.png'.")
+    print(f"Succes! index.html blev genereret med sikker CSS.")
 
 if __name__ == "__main__":
     main()
