@@ -46,7 +46,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 /* Simpelt logo - Samme størrelse alle steder */
 .logo { 
     width: 100%;
-    max-width: 240px; /* Lidt større end de oprindelige 180px */
+    max-width: 240px; 
     aspect-ratio: 1 / 1; 
     object-fit: cover; 
     border-radius: 50%; 
@@ -288,6 +288,8 @@ def main():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Genindlæser automatisk siden hvert 15. minut (900 sekunder) -->
+        <meta http-equiv="refresh" content="900">
         <title>KYSTINDEX Fyn</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
@@ -316,7 +318,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret med sikker CSS.")
+    print(f"Succes! index.html blev genereret med indbygget auto-refresh ({nu}).")
 
 if __name__ == "__main__":
     main()
