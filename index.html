@@ -38,7 +38,7 @@
     </head>
     <body>
         <h1>🎣 Kystvejr Fyn</h1>
-        <div class="timestamp">Opdateret: 16-09-2026 kl. 08:49</div>
+        <div class="timestamp">Opdateret: 16-09-2026 kl. 08:59</div>
         
         
         <div class="card optimal">
@@ -47,7 +47,7 @@
             <div class="info-list">
                 <p><strong>Vind:</strong> 4.12 m/s (stød 5.66 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vandtemp:</strong> 16.5 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart0"></canvas>
@@ -60,30 +60,30 @@
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 2.46 m/s (stød 3.96 m/s) fra V</p>
-                <p><strong>Vandstand:</strong> 27.0 cm <span class="trend">(↓ Faldende)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vind:</strong> 2.47 m/s (stød 3.98 m/s) fra V</p>
+                <p><strong>Vandstand:</strong> 26.0 cm <span class="trend">(↓ Faldende)</span></p>
+                <p><strong>Vandtemp:</strong> 16.5 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra V (2.46 m/s) giver fine, rolige kasteforhold. Vandstanden er +27.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
+            <p class="note">Vind fra V (2.47 m/s) giver fine, rolige kasteforhold. Vandstanden er +26.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
         </div>
         
         <div class="card moderate">
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 4.23 m/s (stød 5.91 m/s) fra V</p>
+                <p><strong>Vind:</strong> 4.17 m/s (stød 5.69 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> 16.9 °C</p>
+                <p><strong>Vandtemp:</strong> N/A °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart2"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra V (4.23 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
+            <p class="note">Vind fra V (4.17 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
         </div>
         
         <div class="card moderate">
@@ -92,7 +92,7 @@
             <div class="info-list">
                 <p><strong>Vind:</strong> 4.12 m/s (stød 5.66 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> 16.9 °C</p>
+                <p><strong>Vandtemp:</strong> N/A °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart3"></canvas>
@@ -156,9 +156,9 @@
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ["06:10", "06:20", "06:30", "06:40", "06:50", "07:00", "07:10", "07:20", "07:30", "07:40", "07:50", "08:00", "08:10", "08:20", "08:30", "08:40"],
+                labels: ["06:20", "06:30", "06:40", "06:50", "07:00", "07:10", "07:20", "07:30", "07:40", "07:50", "08:00", "08:10", "08:20", "08:30", "08:40", "08:50"],
                 datasets: [{
-                    data: [37.0, 37.0, 37.0, 36.0, 36.0, 35.0, 34.0, 33.0, 32.0, 31.0, 30.0, 29.0, 29.0, 28.0, 27.0, 27.0],
+                    data: [37.0, 37.0, 36.0, 36.0, 35.0, 34.0, 33.0, 32.0, 31.0, 30.0, 29.0, 29.0, 28.0, 27.0, 27.0, 26.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
