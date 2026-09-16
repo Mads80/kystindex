@@ -1,5 +1,8 @@
-import requests
+import json
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+import requests
 
 MET_URL = "https://opendataapi.dmi.dk/v2/metObs/collections/observation/items"
 OCEAN_URL = "https://opendataapi.dmi.dk/v2/oceanObs/collections/observation/items"
@@ -7,30 +10,30 @@ OCEAN_URL = "https://opendataapi.dmi.dk/v2/oceanObs/collections/observation/item
 SPOTS = {
     "Helnæs Fyr (Sydvestfyn)": {
         "coords": "55.142° N, 9.998° E",
-        "met_station": "06120",
-        "ocean_level_st": "23293",
-        "ocean_temp_st": "23289",
+        "met_station": "06123",      # Vind: Assens/Torø (Perfekt til Vest/Sydfyn)
+        "ocean_level_st": "9020201", # Vandstand: Assens Havn I
+        "ocean_temp_st": "23289",    # Temp: Fredericia Havn II
         "lae_vinde": ["Ø", "SØ", "NØ"]
     },
-    "Kerteminde Nordstrand (Østfyn)": {
+    "Kerteminde Havn / Nordstrand (Østfyn)": {
         "coords": "55.466° N, 10.658° E",
-        "met_station": "06120",
-        "ocean_level_st": "28234",
-        "ocean_temp_st": "28231",
+        "met_station": "06120",      # Vind: Odense Lufthavn
+        "ocean_level_st": "9020401", # Vandstand: Kerteminde Havn I
+        "ocean_temp_st": "28231",    # Temp: Slipshavn II
         "lae_vinde": ["V", "SV", "NV"]
     },
     "Knudshoved / Nyborg (Østfyn)": {
         "coords": "55.297° N, 10.853° E",
-        "met_station": "06120",
-        "ocean_level_st": "28234",
-        "ocean_temp_st": "28231",
+        "met_station": "06126",      # Vind: Årslev
+        "ocean_level_st": "28234",   # Vandstand: Slipshavn
+        "ocean_temp_st": "28231",    # Temp: Slipshavn II
         "lae_vinde": ["V", "SV", "NV", "S"]
     },
     "Flyvesandet (Nordfyn)": {
         "coords": "55.615° N, 10.297° E",
-        "met_station": "06126",
-        "ocean_level_st": "28234",
-        "ocean_temp_st": "23131",
+        "met_station": "06120",      # Vind: Odense Lufthavn
+        "ocean_level_st": "9020101", # Vandstand: Bogense Havn I
+        "ocean_temp_st": "23289",    # Temp: Fredericia Havn II
         "lae_vinde": ["S", "SØ", "SV"]
     }
 }
@@ -53,76 +56,101 @@ def hent_dmi_met(station_id):
                 if param in ["wind_speed", "wind_dir", "wind_max"] and param not in data:
                     data[param] = props["value"]
             return data
-    except Exception as e:
+    except requests.RequestException as e:
         print(f"Fejl ved hentning af vejr for {station_id}: {e}")
     return None
 
-def hent_dmi_ocean_historik(station_id, target_param, limit=12):
-    """Henter en liste af de seneste målinger til trend og graf (ca. de sidste 2 timer)."""
+def hent_dmi_ocean_historik(station_id, target_param, limit=50):
     params = {"stationId": station_id, "limit": limit}
     try:
         res = requests.get(OCEAN_URL, params=params, timeout=10)
         if res.status_code == 200:
             features = res.json().get("features", [])
             vals = []
+            times = []
             for item in features:
                 props = item["properties"]
                 if props["parameterId"] == target_param:
-                    vals.append(props["value"])
-            return vals
-    except Exception as e:
+                    val = props.get("value")
+                    ts = props.get("observed") or props.get("time") or props.get("timeStamp") or ""
+                    
+                    if val is not None and ts:
+                        try:
+                            if "T" in ts and "Z" in ts:
+                                ts_clean = ts.replace("Z", "")
+                                dt_utc = datetime.fromisoformat(ts_clean)
+                                dt_utc_aware = dt_utc.replace(tzinfo=ZoneInfo("UTC"))
+                                dt_dk = dt_utc_aware.astimezone(ZoneInfo("Europe/Copenhagen"))
+                                t_str = dt_dk.strftime("%H:%M")
+                            elif "T" in ts:
+                                t_str = ts.split("T")[1][:5]
+                            else:
+                                t_str = ""
+                            
+                            if t_str:
+                                vals.append(val)
+                                times.append(t_str)
+                        except (TypeError, ValueError):
+                            continue
+            return vals, times
+    except requests.RequestException as e:
         print(f"Fejl ved hentning af hav-historik for {station_id}: {e}")
-    return []
+    return [], []
 
 def hent_dmi_ocean_val(station_id, target_param):
-    vals = hent_dmi_ocean_historik(station_id, target_param, limit=1)
+    vals, _ = hent_dmi_ocean_historik(station_id, target_param, limit=1)
     return vals[0] if vals else "N/A"
 
-def evaluer_kyst(spot_navn, coords, met_data, vandstand_historik, temp, lae_vinde):
+def evaluer_kyst(spot_navn, coords, met_data, vandstand_vals, vandstand_tider, temp, lae_vinde):
     hastighed = met_data.get("wind_speed", 0) if met_data else 0
     stod = met_data.get("wind_max", 0) if met_data else 0
     grader = met_data.get("wind_dir", 0) if met_data else 0
     kompas = grader_til_kompas(grader) if met_data else "N/A"
     
-    # Aktuel vandstand er den nyeste (første i listen)
-    vandstand = vandstand_historik[0] if vandstand_historik else "N/A"
+    vandstand = vandstand_vals[0] if vandstand_vals else 0
     
-    # Udregn trend (sammenlign nu med ca. 1 time siden, f.eks. index 5)
-    trend_symbol, trend_tekst = "➡️", "Stabilt"
-    if isinstance(vandstand, (int, float)) and len(vandstand_historik) >= 6:
-        gammel_vaerdi = vandstand_historik[5]
+    trend_symbol, trend_tekst = "→", "Uændret"
+    if isinstance(vandstand, (int, float)) and len(vandstand_vals) >= 6:
+        gammel_vaerdi = vandstand_vals[5]
         diff = vandstand - gammel_vaerdi
         if diff > 0.8:
-            trend_symbol, trend_tekst = "↗", "Stigende"
+            trend_symbol, trend_tekst = "↑", "Stigende"
         elif diff < -0.8:
-            trend_symbol, trend_tekst = "↘", "Faldende"
+            trend_symbol, trend_tekst = "↓", "Faldende"
 
     if hastighed > 10:
         status, css_class, score = "❌ DÅRLIG (For kraftig vind)", "bad", 4
-        note = f"Vind på {hastighed} m/s giver for meget opslået vand og løsrevet tang. Svært at fiske effektivt."
+        note = f"Vind på {hastighed} m/s (stød op til {stod} m/s) skaber for meget uro, opslået bund og løsrevet tang. Det bliver svært at fiske effektivt her."
     elif kompas in lae_vinde:
         status, css_class, score = "🔥 OPTIMAL (Læ / Sidevind)", "optimal", 1
-        note = f"Vind fra {kompas} giver gode kasteforhold. Perfekt vind til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted!"
+        note = f"Vind fra {kompas} ({hastighed} m/s) giver fine, rolige kasteforhold. "
+        if trend_tekst == "Stigende":
+            note += f"Vandstanden er {vandstand:+.1f} cm og **stigende**, hvilket ofte presser havørreden helt tæt på kysten. Optimalt til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted over det lave vand!"
+        elif trend_tekst == "Faldende":
+            note += f"Vandstanden er {vandstand:+.1f} cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt."
+        else:
+            note += f"Vandstanden er stabilt omkring {vandstand:+.1f} cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru."
     elif hastighed <= 3:
         status, css_class, score = "⚠️ NOGENLUNDE (Blikstille)", "warning", 3
-        note = "Næsten blikstille. Vandet er sandsynligvis meget klart, hvilket kan gøre havørreden sky på det lave vand."
+        note = f"Næsten blikstille ({hastighed} m/s). Vandet er sandsynligvis meget klart, hvilket kan gøre havørreden sky. Sørg for at liste langs kanten og kaste langt."
+        if isinstance(vandstand, (int, float)):
+            note += f" Vandstand: {vandstand:+.1f} cm ({trend_tekst})."
     else:
         status, css_class, score = "🟡 MODERAT (Pålandsvind)", "moderate", 2
-        note = f"Vind fra {kompas} direkte ind på kysten. Skaber god sløring i vandet, men modvind kan gøre kastene tunge."
-        
-    if isinstance(vandstand, (int, float)):
-        if vandstand > 15:
-            note += f" Høj vandstand (+{vandstand} cm): Fisken kan trække helt ind på det lave vand."
-        elif vandstand < -15:
-            note += f" Lav vandstand ({vandstand} cm): Søg ud mod dybere pynter, rev og skrænter."
+        note = f"Vind fra {kompas} ({hastighed} m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet."
+        if trend_tekst == "Stigende":
+            note += f" Da vandet samtidig er **stigende** (+{vandstand:.1f} cm), er der gode chancer for fisk på det nære vand, selvom modvinden kan gøre kastene tunge."
+        else:
+            note += f" Vandstand er {vandstand:+.1f} cm ({trend_tekst}). Gode betingelser, men vær opmærksom på eventuelle bølger."
 
-    # Forbered data til grafen (vender listen, så ældste er til venstre og nyeste til højre)
-    graf_data = list(reversed(vandstand_historik)) if vandstand_historik else []
+    graf_data = list(reversed(vandstand_vals)) if vandstand_vals else []
+    graf_tider = list(reversed(vandstand_tider)) if vandstand_tider else []
 
     return {
         "spot": spot_navn, "coords": coords, "hastighed": hastighed, "stod": stod,
         "kompas": kompas, "vandstand": vandstand, "trend_symbol": trend_symbol, "trend_tekst": trend_tekst,
-        "temp": temp, "status": status, "css_class": css_class, "note": note, "score": score, "graf_data": graf_data
+        "temp": temp, "status": status, "css_class": css_class, "note": note, "score": score, 
+        "graf_data": graf_data, "graf_tider": graf_tider
     }
 
 def main():
@@ -130,10 +158,10 @@ def main():
     
     for spot_navn, info in SPOTS.items():
         met_data = hent_dmi_met(info["met_station"])
-        vandstand_historik = hent_dmi_ocean_historik(info["ocean_level_st"], "sealev_ln", limit=12)
+        vals, times = hent_dmi_ocean_historik(info["ocean_level_st"], "sealev_ln", limit=50)
         temp = hent_dmi_ocean_val(info["ocean_temp_st"], "tw")
         
-        vurdering = evaluer_kyst(spot_navn, info["coords"], met_data, vandstand_historik, temp, info["lae_vinde"])
+        vurdering = evaluer_kyst(spot_navn, info["coords"], met_data, vals, times, temp, info["lae_vinde"])
         results.append(vurdering)
 
     results.sort(key=lambda x: x["score"])
@@ -143,13 +171,18 @@ def main():
     
     for i, r in enumerate(results):
         chart_id = f"waterChart{i}"
+        
+        # Sikrer gyldig JavaScript syntax
+        json_tider = json.dumps(r['graf_tider'])
+        json_data = json.dumps(r['graf_data'])
+
         cards_html += f"""
         <div class="card {r['css_class']}">
             <h2>{r['spot']}</h2>
             <div class="coords">📍 {r['coords']}</div>
             <div class="info-list">
                 <p><strong>Vind:</strong> {r['hastighed']} m/s (stød {r['stod']} m/s) fra {r['kompas']}</p>
-                <p><strong>Vandstand:</strong> {r['vandstand']} cm ({r['trend_symbol']} {r['trend_tekst']})</p>
+                <p><strong>Vandstand:</strong> {r['vandstand']} cm <span class="trend">({r['trend_symbol']} {r['trend_tekst']})</span></p>
                 <p><strong>Vandtemp:</strong> {r['temp']} °C</p>
             </div>
             <div class="chart-container">
@@ -160,18 +193,19 @@ def main():
         </div>
         """
         
-        # Generer JavaScript til at tegne den individuelle graf via Chart.js
         chart_scripts += f"""
         const ctx{i} = document.getElementById('{chart_id}').getContext('2d');
+
         new Chart(ctx{i}, {{
             type: 'line',
             data: {{
-                labels: {r['graf_data']},
+                labels: {json_tider},
                 datasets: [{{
-                    data: {r['graf_data']},
+                    data: {json_data},
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
+                    pointBackgroundColor: '#38bdf8',
                     tension: 0.3,
                     fill: true,
                     backgroundColor: 'rgba(56, 189, 248, 0.05)'
@@ -180,19 +214,32 @@ def main():
             options: {{
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {{ legend: {{ display: false }}, tooltip: {{ enabled: false }}}},
+                plugins: {{ legend: {{ display: false }}, tooltip: {{ enabled: true }}}},
                 scales: {{
-                    x: {{ display: false }},
+                    x: {{ 
+                        display: true,
+                        grid: {{ display: false }},
+                        ticks: {{ 
+                            color: '#64748b', 
+                            font: {{ size: 9 }},
+                            autoSkip: true,
+                            maxTicksLimit: 6
+                        }}
+                    }},
                     y: {{ 
                         grid: {{ color: 'rgba(255, 255, 255, 0.05)' }},
-                        ticks: {{ color: '#64748b', font: {{ size: 10 }} }}
+                        ticks: {{ 
+                            color: '#64748b', 
+                            font: {{ size: 9 }}
+                        }}
                     }}
                 }}
             }}
         }});
         """
 
-    nu = datetime.now().strftime("%d-%m-%Y kl. %H:%M")
+    # Henter lokal dansk tid
+    nu = datetime.now(ZoneInfo("Europe/Copenhagen")).strftime("%d-%m-%Y kl. %H:%M")
 
     full_html = f"""
     <!DOCTYPE html>
@@ -201,7 +248,6 @@ def main():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Kystvejr Fyn</title>
-        <!-- Chart.js CDN til grafer -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }}
@@ -221,10 +267,16 @@ def main():
             .info-list {{ background: #0f172a; padding: 12px; border-radius: 8px; margin: 15px 0; }}
             .info-list p {{ margin: 6px 0; font-size: 1em; }}
             
-            .chart-container {{ position: relative; height: 90px; margin: 15px 0; background: #0f172a; border-radius: 8px; padding: 5px; }}
+            .trend {{ color: #94a3b8; font-size: 0.9em; margin-left: 5px; }}
+            
+            .chart-container {{ position: relative; height: 125px; margin: 15px 0; background: #0f172a; border-radius: 8px; padding: 8px; }}
             
             .status {{ font-size: 1.1em; margin-top: 10px; }}
             .note {{ color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }}
+            
+            .footer {{ text-align: center; color: #64748b; font-size: 0.85em; margin-top: 30px; margin-bottom: 20px; }}
+            .footer a {{ color: #38bdf8; text-decoration: none; }}
+            .footer a:hover {{ text-decoration: underline; }}
         </style>
     </head>
     <body>
@@ -232,6 +284,10 @@ def main():
         <div class="timestamp">Opdateret: {nu}</div>
         
         {cards_html}
+
+        <div class="footer">
+            Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a>
+        </div>
 
         <script>
             {chart_scripts}
@@ -243,7 +299,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret {nu} med grafer og vandstandstrend.")
+    print(f"Succes! index.html blev genereret {nu} med korrekte tider og individuelle stationer.")
 
 if __name__ == "__main__":
     main()
