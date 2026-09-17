@@ -55,14 +55,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         <div class="header-container">
             <img src="logo.png" alt="KYSTINDEX" class="logo">
         </div>
-        <div class="timestamp">Opdateret: 18-09-2026 kl. 01:37</div>
+        <div class="timestamp">Opdateret: 18-09-2026 kl. 01:47</div>
         
         
         <div class="card optimal">
             <h2>Kerteminde Havn / Nordstrand (Østfyn)</h2>
             <div class="coords">📍 55.466° N, 10.658° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 2.57 m/s (stød 4.63 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 2.57 m/s (stød 4.12 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
@@ -77,22 +77,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 2.17 m/s (stød 3.39 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 2.0 cm <span class="trend">(↑ Stigende)</span></p>
+                <p><strong>Vind:</strong> 2.58 m/s (stød 4.03 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 4.0 cm <span class="trend">(↑ Stigende)</span></p>
                 <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (2.17 m/s) giver fine, rolige kasteforhold. Vandstanden er +2.0 cm og **stigende**, hvilket ofte presser havørreden helt tæt på kysten. Optimalt til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted over det lave vand!</p>
+            <p class="note">Vind fra SV (2.58 m/s) giver fine, rolige kasteforhold. Vandstanden er +4.0 cm og **stigende**, hvilket ofte presser havørreden helt tæt på kysten. Optimalt til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted over det lave vand!</p>
         </div>
         
         <div class="card optimal">
             <h2>Flyvesandet (Nordfyn)</h2>
             <div class="coords">📍 55.615° N, 10.297° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 2.57 m/s (stød 4.63 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 2.57 m/s (stød 4.12 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.5 °C</p>
             </div>
@@ -107,7 +107,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 7.36 m/s (stød 8.94 m/s) fra V</p>
+                <p><strong>Vind:</strong> 7.39 m/s (stød 8.89 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.5 °C</p>
             </div>
@@ -115,7 +115,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
                 <canvas id="waterChart3"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra V (7.36 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
+            <p class="note">Vind fra V (7.39 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
         </div>
         
 
@@ -173,9 +173,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ["23:00", "23:10", "23:20", "23:30", "23:40", "23:50", "00:00", "00:10", "00:20", "00:30", "00:40", "00:50", "01:00", "01:10", "01:20", "01:30"],
+                labels: ["23:10", "23:20", "23:30", "23:40", "23:50", "00:00", "00:10", "00:20", "00:30", "00:40", "00:50", "01:00", "01:10", "01:20", "01:30", "01:40"],
                 datasets: [{
-                    data: [2.0, 0.0, -1.0, -2.0, -3.0, -2.0, -1.0, -2.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 2.0],
+                    data: [0.0, -1.0, -2.0, -3.0, -2.0, -1.0, -2.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 2.0, 4.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
