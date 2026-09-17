@@ -39,7 +39,7 @@ SPOTS = {
 
 # --- SKUDSIKKER CSS VARIABEL (Tilpasset bredt banner-logo) ---
 CSS = """
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #67bed9; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
 
 .header-container { text-align: center; margin-top: 15px; margin-bottom: 5px; }
 
