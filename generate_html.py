@@ -37,21 +37,19 @@ SPOTS = {
     }
 }
 
-# --- SKUDSIKKER CSS VARIABEL ---
+# --- SKUDSIKKER CSS VARIABEL (Tilpasset bredt banner-logo) ---
 CSS = """
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
 
 .header-container { text-align: center; margin-top: 15px; margin-bottom: 5px; }
 
-/* Simpelt logo - Samme størrelse alle steder */
+/* Nyt bredt banner-logo */
 .logo { 
     width: 100%;
-    max-width: 240px; 
-    aspect-ratio: 1 / 1; 
-    object-fit: cover; 
-    border-radius: 50%; 
-    border: 4px solid #1e293b; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+    max-width: 520px; /* Gør banneret dejligt stort og letlæseligt på både mobil og PC */
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .timestamp { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; margin-top: 15px; }
@@ -288,7 +286,7 @@ def main():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Genindlæser automatisk siden hvert 15. minut (900 sekunder) -->
+        <!-- Genindlæser automatisk siden hvert 15. minut -->
         <meta http-equiv="refresh" content="900">
         <title>KYSTINDEX Fyn</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -318,7 +316,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret med indbygget auto-refresh ({nu}).")
+    print(f"Succes! index.html blev genereret med det nye banner-logo ({nu}).")
 
 if __name__ == "__main__":
     main()
