@@ -55,31 +55,31 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         <div class="header-container">
             <img src="logo.png" alt="KYSTINDEX" class="logo">
         </div>
-        <div class="timestamp">Opdateret: 17-09-2026 kl. 17:54</div>
+        <div class="timestamp">Opdateret: 17-09-2026 kl. 18:04</div>
         
         
         <div class="card optimal">
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 5.82 m/s (stød 9.19 m/s) fra S</p>
-                <p><strong>Vandstand:</strong> 21.0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vind:</strong> 5.48 m/s (stød 8.37 m/s) fra S</p>
+                <p><strong>Vandstand:</strong> 22.0 cm <span class="trend">(↑ Stigende)</span></p>
+                <p><strong>Vandtemp:</strong> 16.2 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart0"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra S (5.82 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +21.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
+            <p class="note">Vind fra S (5.48 m/s) giver fine, rolige kasteforhold. Vandstanden er +22.0 cm og **stigende**, hvilket ofte presser havørreden helt tæt på kysten. Optimalt til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted over det lave vand!</p>
         </div>
         
         <div class="card optimal">
             <h2>Flyvesandet (Nordfyn)</h2>
             <div class="coords">📍 55.615° N, 10.297° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 5.66 m/s (stød 9.77 m/s) fra S</p>
+                <p><strong>Vind:</strong> 5.66 m/s (stød 9.26 m/s) fra S</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> 16.4 °C</p>
+                <p><strong>Vandtemp:</strong> N/A °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart1"></canvas>
@@ -92,9 +92,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <h2>Kerteminde Havn / Nordstrand (Østfyn)</h2>
             <div class="coords">📍 55.466° N, 10.658° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 5.66 m/s (stød 9.77 m/s) fra S</p>
+                <p><strong>Vind:</strong> 5.66 m/s (stød 9.26 m/s) fra S</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vandtemp:</strong> 16.2 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart2"></canvas>
@@ -107,15 +107,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 11.0 m/s (stød 14.19 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 10.11 m/s (stød 11.96 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> 16.4 °C</p>
+                <p><strong>Vandtemp:</strong> N/A °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart3"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> ❌ DÅRLIG (For kraftig vind)</p>
-            <p class="note">Vind på 11.0 m/s (stød op til 14.19 m/s) skaber for meget uro, opslået bund og løsrevet tang. Det bliver svært at fiske effektivt her.</p>
+            <p class="note">Vind på 10.11 m/s (stød op til 11.96 m/s) skaber for meget uro, opslået bund og løsrevet tang. Det bliver svært at fiske effektivt her.</p>
         </div>
         
 
@@ -130,9 +130,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx0, {
             type: 'line',
             data: {
-                labels: ["15:20", "15:30", "15:40", "15:50", "16:00", "16:10", "16:20", "16:30", "16:40", "16:50", "17:00", "17:10", "17:20", "17:30", "17:40", "17:50"],
+                labels: ["15:30", "15:40", "15:50", "16:00", "16:10", "16:20", "16:30", "16:40", "16:50", "17:00", "17:10", "17:20", "17:30", "17:40", "17:50", "18:00"],
                 datasets: [{
-                    data: [21.0, 21.0, 21.0, 20.0, 20.0, 21.0, 22.0, 22.0, 20.0, 21.0, 21.0, 21.0, 22.0, 22.0, 22.0, 21.0],
+                    data: [21.0, 21.0, 20.0, 20.0, 21.0, 22.0, 22.0, 20.0, 21.0, 21.0, 21.0, 22.0, 22.0, 22.0, 21.0, 22.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
