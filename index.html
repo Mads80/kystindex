@@ -55,7 +55,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         <div class="header-container">
             <img src="logo.png" alt="KYSTINDEX" class="logo">
         </div>
-        <div class="timestamp">Opdateret: 18-09-2026 kl. 20:38</div>
+        <div class="timestamp">Opdateret: 18-09-2026 kl. 20:48</div>
         
         
         <div class="card optimal">
@@ -77,7 +77,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 4.62 m/s (stød 7.4 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 5.45 m/s (stød 9.14 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 42.0 cm <span class="trend">(↓ Faldende)</span></p>
                 <p><strong>Vandtemp:</strong> N/A °C</p>
             </div>
@@ -85,7 +85,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
                 <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (4.62 m/s) giver fine, rolige kasteforhold. Vandstanden er +42.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
+            <p class="note">Vind fra SV (5.45 m/s) giver fine, rolige kasteforhold. Vandstanden er +42.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
         </div>
         
         <div class="card optimal">
@@ -94,7 +94,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <div class="info-list">
                 <p><strong>Vind:</strong> 5.66 m/s (stød 8.23 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vandtemp:</strong> 16.2 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart2"></canvas>
@@ -107,15 +107,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 11.18 m/s (stød 13.84 m/s) fra V</p>
+                <p><strong>Vind:</strong> 11.76 m/s (stød 15.49 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vandtemp:</strong> 16.2 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart3"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> ❌ DÅRLIG (For kraftig vind)</p>
-            <p class="note">Vind på 11.18 m/s (stød op til 13.84 m/s) skaber for meget uro, opslået bund og løsrevet tang. Det bliver svært at fiske effektivt her.</p>
+            <p class="note">Vind på 11.76 m/s (stød op til 15.49 m/s) skaber for meget uro, opslået bund og løsrevet tang. Det bliver svært at fiske effektivt her.</p>
         </div>
         
 
@@ -173,9 +173,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ["18:00", "18:10", "18:20", "18:30", "18:40", "18:50", "19:00", "19:10", "19:20", "19:30", "19:40", "19:50", "20:00", "20:10", "20:20", "20:30"],
+                labels: ["18:10", "18:20", "18:30", "18:40", "18:50", "19:00", "19:10", "19:20", "19:30", "19:40", "19:50", "20:00", "20:10", "20:20", "20:30", "20:40"],
                 datasets: [{
-                    data: [40.0, 43.0, 43.0, 44.0, 45.0, 45.0, 45.0, 45.0, 45.0, 44.0, 45.0, 44.0, 45.0, 45.0, 44.0, 42.0],
+                    data: [43.0, 43.0, 44.0, 45.0, 45.0, 45.0, 45.0, 45.0, 44.0, 45.0, 44.0, 45.0, 45.0, 44.0, 42.0, 42.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
