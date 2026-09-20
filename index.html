@@ -10,6 +10,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
 
+html { scroll-behavior: smooth; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
 
 .header-container { text-align: center; margin-top: 15px; margin-bottom: 5px; }
@@ -23,7 +24,62 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     margin: 0 auto;
 }
 
-.card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+/* Tidsstempel i toppen */
+.timestamp-top { 
+    text-align: center; 
+    color: #94a3b8; 
+    font-size: 0.9em; 
+    margin-bottom: 15px; 
+    margin-top: 10px; 
+}
+
+/* Info-boks med lysere tekst og uden emoji */
+.quick-overview {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.quick-overview h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.05em;
+    color: #f8fafc; /* Lysere tekstfarve */
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+.quick-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.quick-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0f172a;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #f8fafc;
+    transition: background 0.2s, transform 0.1s;
+    border-left: 4px solid #64748b;
+}
+.quick-item:hover {
+    background: #162032;
+    transform: translateX(3px);
+}
+.quick-item.optimal { border-left-color: #22c55e; }
+.quick-item.moderate { border-left-color: #eab308; }
+.quick-item.warning { border-left-color: #f97316; }
+.quick-item.bad { border-left-color: #ef4444; }
+
+.quick-spot-name { font-weight: 600; font-size: 0.95em; }
+.quick-spot-status { font-size: 0.9em; color: #94a3b8; }
+
+.card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); scroll-margin-top: 20px; }
 .card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
 
 .coords { color: #94a3b8; font-size: 0.85em; font-family: monospace; margin-bottom: 15px; }
@@ -43,7 +99,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .status { font-size: 1.1em; margin-top: 10px; }
 .note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
 
-/* Flexbox-footer med copyright, tidsstempel og DMI-link */
+/* Flexbox-footer med copyright og DMI-link */
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -71,75 +127,106 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     </head>
     <body>
         <div class="header-container">
-            <!-- Logo med cache-busting (?v=20-09-2026 kl. 10:39) -->
-            <img src="logo.png?v=20-09-2026 kl. 10:39" alt="ErKystenKlar.dk" class="logo">
+            <!-- Logo med cache-busting (?v=20-09-2026 kl. 15:36) -->
+            <img src="logo.png?v=20-09-2026 kl. 15:36" alt="ErKystenKlar.dk" class="logo">
+        </div>
+        
+        <!-- Tidsstempel i toppen -->
+        <div class="timestamp-top">Opdateret: 20-09-2026 kl. 15:36</div>
+
+        <!-- Om side / hurtig oversigts-boks -->
+        <div class="quick-overview">
+            <h3>Aktuelle vejr- og havdata fra DMI – tilpasset til de fynske kyststræk.</h3>
+            <div class="quick-list">
+                
+        <a href="#spot-0" class="quick-item optimal">
+            <span class="quick-spot-name">📍 Kerteminde Havn / Nordstrand (Østfyn)</span>
+            <span class="quick-spot-status">🔥 OPTIMAL (Læ / Sidevind)</span>
+        </a>
+        
+        <a href="#spot-1" class="quick-item optimal">
+            <span class="quick-spot-name">📍 Knudshoved / Nyborg (Østfyn)</span>
+            <span class="quick-spot-status">🔥 OPTIMAL (Læ / Sidevind)</span>
+        </a>
+        
+        <a href="#spot-2" class="quick-item moderate">
+            <span class="quick-spot-name">📍 Flyvesandet (Nordfyn)</span>
+            <span class="quick-spot-status">🟡 MODERAT (Pålandsvind)</span>
+        </a>
+        
+        <a href="#spot-3" class="quick-item bad">
+            <span class="quick-spot-name">📍 Helnæs Fyr (Sydvestfyn)</span>
+            <span class="quick-spot-status">❌ DÅRLIG (For kraftig vind)</span>
+        </a>
+        
+            </div>
         </div>
         
         
-        <div class="card optimal">
+        <div id="spot-0" class="card optimal">
             <h2>Kerteminde Havn / Nordstrand (Østfyn)</h2>
             <div class="coords">📍 55.466° N, 10.658° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 6.17 m/s (stød 9.26 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 8.23 m/s (stød 11.83 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> 16.1 °C</p>
+                <p><strong>Vandtemp:</strong> 16.2 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart0"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (6.17 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +0.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
+            <p class="note">Vind fra V (8.23 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +0.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
         </div>
         
-        <div class="card optimal">
+        <div id="spot-1" class="card optimal">
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 6.16 m/s (stød 10.55 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 49.0 cm <span class="trend">(↓ Faldende)</span></p>
-                <p><strong>Vandtemp:</strong> 16.1 °C</p>
+                <p><strong>Vind:</strong> 7.33 m/s (stød 13.42 m/s) fra V</p>
+                <p><strong>Vandstand:</strong> 37.0 cm <span class="trend">(↓ Faldende)</span></p>
+                <p><strong>Vandtemp:</strong> 16.2 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (6.16 m/s) giver fine, rolige kasteforhold. Vandstanden er +49.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
+            <p class="note">Vind fra V (7.33 m/s) giver fine, rolige kasteforhold. Vandstanden er +37.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
         </div>
         
-        <div class="card optimal">
+        <div id="spot-2" class="card moderate">
             <h2>Flyvesandet (Nordfyn)</h2>
             <div class="coords">📍 55.615° N, 10.297° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 6.17 m/s (stød 9.26 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 8.23 m/s (stød 11.83 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart2"></canvas>
             </div>
-            <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (6.17 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +0.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
+            <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
+            <p class="note">Vind fra V (8.23 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
         </div>
         
-        <div class="card moderate">
+        <div id="spot-3" class="card bad">
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 8.67 m/s (stød 12.74 m/s) fra V</p>
+                <p><strong>Vind:</strong> 10.96 m/s (stød 15.09 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart3"></canvas>
             </div>
-            <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra V (8.67 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
+            <p class="status"><strong>Status:</strong> ❌ DÅRLIG (For kraftig vind)</p>
+            <p class="note">Vind på 10.96 m/s (stød op til 15.09 m/s) skaber for meget uro, opslået bund og løsrevet tang. Det bliver svært at fiske effektivt her.</p>
         </div>
         
 
-        <!-- Samlet flexbox-footer med copyright og tidsstempel til venstre, og DMI-link til højre -->
+        <!-- Samlet flexbox-footer med copyright og DMI-link -->
         <div class="footer-container">
-            <div class="footer-left">© 2026 ErKystenKlar.dk &bull; Opdateret: 20-09-2026 kl. 10:39</div>
+            <div class="footer-left">© 2026 ErKystenKlar.dk</div>
             <div class="dmi-link">Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a></div>
         </div>
 
@@ -193,9 +280,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30"],
+                labels: ["13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30"],
                 datasets: [{
-                    data: [50.0, 51.0, 51.0, 52.0, 52.0, 52.0, 51.0, 51.0, 52.0, 51.0, 51.0, 51.0, 51.0, 50.0, 49.0, 49.0],
+                    data: [41.0, 41.0, 36.0, 37.0, 38.0, 40.0, 41.0, 36.0, 36.0, 43.0, 38.0, 33.0, 38.0, 38.0, 36.0, 37.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,

@@ -37,8 +37,9 @@ SPOTS = {
     }
 }
 
-# --- SKUDSIKKER CSS VARIABEL (Tilpasset bredt banner-logo og flexbox-footer) ---
+# --- SKUDSIKKER CSS VARIABEL ---
 CSS = """
+html { scroll-behavior: smooth; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
 
 .header-container { text-align: center; margin-top: 15px; margin-bottom: 5px; }
@@ -52,7 +53,62 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     margin: 0 auto;
 }
 
-.card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+/* Tidsstempel i toppen */
+.timestamp-top { 
+    text-align: center; 
+    color: #94a3b8; 
+    font-size: 0.9em; 
+    margin-bottom: 15px; 
+    margin-top: 10px; 
+}
+
+/* Info-boks med lysere tekst og uden emoji */
+.quick-overview {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.quick-overview h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.05em;
+    color: #f8fafc; /* Lysere tekstfarve */
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+.quick-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.quick-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0f172a;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #f8fafc;
+    transition: background 0.2s, transform 0.1s;
+    border-left: 4px solid #64748b;
+}
+.quick-item:hover {
+    background: #162032;
+    transform: translateX(3px);
+}
+.quick-item.optimal { border-left-color: #22c55e; }
+.quick-item.moderate { border-left-color: #eab308; }
+.quick-item.warning { border-left-color: #f97316; }
+.quick-item.bad { border-left-color: #ef4444; }
+
+.quick-spot-name { font-weight: 600; font-size: 0.95em; }
+.quick-spot-status { font-size: 0.9em; color: #94a3b8; }
+
+.card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); scroll-margin-top: 20px; }
 .card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
 
 .coords { color: #94a3b8; font-size: 0.85em; font-family: monospace; margin-bottom: 15px; }
@@ -72,7 +128,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .status { font-size: 1.1em; margin-top: 10px; }
 .note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
 
-/* Flexbox-footer med copyright, tidsstempel og DMI-link */
+/* Flexbox-footer med copyright og DMI-link */
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -225,17 +281,26 @@ def main():
 
     results.sort(key=lambda x: x["score"])
 
+    overview_html = ""
     cards_html = ""
     chart_scripts = ""
     
     for i, r in enumerate(results):
         chart_id = f"waterChart{i}"
+        anchor_id = f"spot-{i}"
         
+        overview_html += f"""
+        <a href="#{anchor_id}" class="quick-item {r['css_class']}">
+            <span class="quick-spot-name">📍 {r['spot']}</span>
+            <span class="quick-spot-status">{r['status']}</span>
+        </a>
+        """
+
         json_tider = json.dumps(r['graf_tider'])
         json_data = json.dumps(r['graf_data'])
 
         cards_html += f"""
-        <div class="card {r['css_class']}">
+        <div id="{anchor_id}" class="card {r['css_class']}">
             <h2>{r['spot']}</h2>
             <div class="coords">📍 {r['coords']}</div>
             <div class="info-list">
@@ -318,11 +383,22 @@ def main():
             <img src="logo.png?v={nu}" alt="ErKystenKlar.dk" class="logo">
         </div>
         
+        <!-- Tidsstempel i toppen -->
+        <div class="timestamp-top">Opdateret: {nu}</div>
+
+        <!-- Om side / hurtig oversigts-boks -->
+        <div class="quick-overview">
+            <h3>Aktuelle vejr- og havdata fra DMI – tilpasset til de fynske kyststræk.</h3>
+            <div class="quick-list">
+                {overview_html}
+            </div>
+        </div>
+        
         {cards_html}
 
-        <!-- Samlet flexbox-footer med copyright og tidsstempel til venstre, og DMI-link til højre -->
+        <!-- Samlet flexbox-footer med copyright og DMI-link -->
         <div class="footer-container">
-            <div class="footer-left">© 2026 ErKystenKlar.dk &bull; Opdateret: {nu}</div>
+            <div class="footer-left">© 2026 ErKystenKlar.dk</div>
             <div class="dmi-link">Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a></div>
         </div>
 
@@ -336,7 +412,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret med copyright og ErKystenKlar opsætning ({nu}).")
+    print(f"Succes! index.html blev genereret uden nedtælling ({nu}).")
 
 if __name__ == "__main__":
     main()
