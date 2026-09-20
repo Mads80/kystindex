@@ -3,11 +3,11 @@ name: Opdater og Udgiv Kystindex
 on:
   # Kør automatisk hvert 15. minut
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/10 * * * *'
   
   # Gør det muligt at starte den manuelt også
   workflow_dispatch:
-
+  
 # Sæt tilladelser op til GitHub Pages
 permissions:
   contents: read
