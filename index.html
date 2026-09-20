@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Genindlæser automatisk siden hvert 15. minut -->
         <meta http-equiv="refresh" content="900">
-        <title>KYSTINDEX Fyn</title>
+        <title>ErKystenKlar.dk</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
 
@@ -17,13 +17,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 /* Nyt bredt banner-logo */
 .logo { 
     width: 100%;
-    max-width: 520px; /* Gør banneret dejligt stort og letlæseligt på både mobil og PC */
+    max-width: 520px;
     height: auto;
     display: block;
     margin: 0 auto;
 }
-
-.timestamp { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; margin-top: 15px; }
 
 .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
 .card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
@@ -45,24 +43,44 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .status { font-size: 1.1em; margin-top: 10px; }
 .note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
 
-.footer { text-align: center; color: #64748b; font-size: 0.85em; margin-top: 30px; margin-bottom: 20px; }
-.footer a { color: #38bdf8; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
+/* Flexbox-footer med copyright, tidsstempel og DMI-link */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 0.85rem;
+    color: #64748b;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.footer-container .footer-left {
+    font-weight: 400;
+}
+.footer-container .dmi-link a {
+    color: #38bdf8;
+    text-decoration: none;
+}
+.footer-container .dmi-link a:hover {
+    text-decoration: underline;
+}
 
         </style>
     </head>
     <body>
         <div class="header-container">
-            <img src="logo.png?v=20-09-2026 kl. 10:07" alt="KYSTINDEX" class="logo">
+            <!-- Logo med cache-busting (?v=20-09-2026 kl. 10:39) -->
+            <img src="logo.png?v=20-09-2026 kl. 10:39" alt="ErKystenKlar.dk" class="logo">
         </div>
-        <div class="timestamp">Opdateret: 20-09-2026 kl. 10:07</div>
         
         
         <div class="card optimal">
             <h2>Kerteminde Havn / Nordstrand (Østfyn)</h2>
             <div class="coords">📍 55.466° N, 10.658° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 5.66 m/s (stød 7.72 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 6.17 m/s (stød 9.26 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.1 °C</p>
             </div>
@@ -70,57 +88,59 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
                 <canvas id="waterChart0"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (5.66 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +0.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
+            <p class="note">Vind fra SV (6.17 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +0.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
         </div>
         
         <div class="card optimal">
             <h2>Knudshoved / Nyborg (Østfyn)</h2>
             <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 4.73 m/s (stød 8.65 m/s) fra SV</p>
-                <p><strong>Vandstand:</strong> 51.0 cm <span class="trend">(→ Uændret)</span></p>
+                <p><strong>Vind:</strong> 6.16 m/s (stød 10.55 m/s) fra SV</p>
+                <p><strong>Vandstand:</strong> 49.0 cm <span class="trend">(↓ Faldende)</span></p>
                 <p><strong>Vandtemp:</strong> 16.1 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (4.73 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +51.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
+            <p class="note">Vind fra SV (6.16 m/s) giver fine, rolige kasteforhold. Vandstanden er +49.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
         </div>
         
         <div class="card optimal">
             <h2>Flyvesandet (Nordfyn)</h2>
             <div class="coords">📍 55.615° N, 10.297° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 5.66 m/s (stød 7.72 m/s) fra SV</p>
+                <p><strong>Vind:</strong> 6.17 m/s (stød 9.26 m/s) fra SV</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart2"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra SV (5.66 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +0.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
+            <p class="note">Vind fra SV (6.17 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +0.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
         </div>
         
         <div class="card moderate">
             <h2>Helnæs Fyr (Sydvestfyn)</h2>
             <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 8.56 m/s (stød 11.26 m/s) fra V</p>
+                <p><strong>Vind:</strong> 8.67 m/s (stød 12.74 m/s) fra V</p>
                 <p><strong>Vandstand:</strong> 0 cm <span class="trend">(→ Uændret)</span></p>
-                <p><strong>Vandtemp:</strong> N/A °C</p>
+                <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart3"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra V (8.56 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
+            <p class="note">Vind fra V (8.67 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Vandstand er +0.0 cm (Uændret). Gode betingelser, men vær opmærksom på eventuelle bølger.</p>
         </div>
         
 
-        <div class="footer">
-            Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a>
+        <!-- Samlet flexbox-footer med copyright og tidsstempel til venstre, og DMI-link til højre -->
+        <div class="footer-container">
+            <div class="footer-left">© 2026 ErKystenKlar.dk &bull; Opdateret: 20-09-2026 kl. 10:39</div>
+            <div class="dmi-link">Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a></div>
         </div>
 
         <script>
@@ -173,9 +193,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ["07:20", "07:30", "07:40", "07:50", "08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00"],
+                labels: ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30"],
                 datasets: [{
-                    data: [46.0, 47.0, 48.0, 48.0, 50.0, 51.0, 51.0, 52.0, 52.0, 52.0, 51.0, 51.0, 52.0, 51.0, 51.0, 51.0, 51.0],
+                    data: [50.0, 51.0, 51.0, 52.0, 52.0, 52.0, 51.0, 51.0, 52.0, 51.0, 51.0, 51.0, 51.0, 50.0, 49.0, 49.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,

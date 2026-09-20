@@ -37,7 +37,7 @@ SPOTS = {
     }
 }
 
-# --- SKUDSIKKER CSS VARIABEL (Tilpasset bredt banner-logo) ---
+# --- SKUDSIKKER CSS VARIABEL (Tilpasset bredt banner-logo og flexbox-footer) ---
 CSS = """
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; max-width: 750px; margin: 0 auto; padding: 15px; }
 
@@ -46,13 +46,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 /* Nyt bredt banner-logo */
 .logo { 
     width: 100%;
-    max-width: 520px; /* Gør banneret dejligt stort og letlæseligt på både mobil og PC */
+    max-width: 520px;
     height: auto;
     display: block;
     margin: 0 auto;
 }
-
-.timestamp { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 25px; margin-top: 15px; }
 
 .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
 .card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
@@ -74,9 +72,29 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .status { font-size: 1.1em; margin-top: 10px; }
 .note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
 
-.footer { text-align: center; color: #64748b; font-size: 0.85em; margin-top: 30px; margin-bottom: 20px; }
-.footer a { color: #38bdf8; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
+/* Flexbox-footer med copyright, tidsstempel og DMI-link */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 0.85rem;
+    color: #64748b;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.footer-container .footer-left {
+    font-weight: 400;
+}
+.footer-container .dmi-link a {
+    color: #38bdf8;
+    text-decoration: none;
+}
+.footer-container .dmi-link a:hover {
+    text-decoration: underline;
+}
 """
 
 def grader_til_kompas(grader):
@@ -288,7 +306,7 @@ def main():
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Genindlæser automatisk siden hvert 15. minut -->
         <meta http-equiv="refresh" content="900">
-        <title>KYSTINDEX Fyn</title>
+        <title>ErKystenKlar.dk</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
 {CSS}
@@ -296,14 +314,16 @@ def main():
     </head>
     <body>
         <div class="header-container">
-            <img src="logo.png?v={nu}" alt="KYSTINDEX" class="logo">
+            <!-- Logo med cache-busting (?v={nu}) -->
+            <img src="logo.png?v={nu}" alt="ErKystenKlar.dk" class="logo">
         </div>
-        <div class="timestamp">Opdateret: {nu}</div>
         
         {cards_html}
 
-        <div class="footer">
-            Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a>
+        <!-- Samlet flexbox-footer med copyright og tidsstempel til venstre, og DMI-link til højre -->
+        <div class="footer-container">
+            <div class="footer-left">© 2026 ErKystenKlar.dk &bull; Opdateret: {nu}</div>
+            <div class="dmi-link">Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a></div>
         </div>
 
         <script>
@@ -316,7 +336,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret med det nye banner-logo ({nu}).")
+    print(f"Succes! index.html blev genereret med copyright og ErKystenKlar opsætning ({nu}).")
 
 if __name__ == "__main__":
     main()
