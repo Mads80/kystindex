@@ -7,21 +7,21 @@ MET_URL = "https://opendataapi.dmi.dk/v2/metObs/collections/observation/items"
 OCEAN_URL = "https://opendataapi.dmi.dk/v2/oceanObs/collections/observation/items"
 
 SPOTS = {
-    "Helnæs Fyr (Sydvestfyn)": {
+    "Helnæs Fyr og Torø (Sydvestfyn)": {
         "coords": "55.142° N, 9.998° E",
         "met_station": "06123",      # Vind: Assens/Torø 
         "ocean_level_st": "9020201", # Vandstand: Assens Havn I
         "ocean_temp_st": "23289",    # Temp: Fredericia Havn II
         "lae_vinde": ["Ø", "SØ", "NØ"]
     },
-    "Kerteminde Havn / Nordstrand (Østfyn)": {
+    "Kerteminde (Østfyn)": {
         "coords": "55.466° N, 10.658° E",
         "met_station": "06120",      # Vind: Odense Lufthavn
-        "ocean_level_st": "9020401", # Vandstand: Kerteminde Havn I
-        "ocean_temp_st": "28231",    # Temp: Slipshavn II
+        "ocean_level_st": "9020401", # Vandstand: Kerteminde Havn I (bruger sea_reg)
+        "ocean_temp_st": "9020401",  # Temp: Kerteminde Havn I
         "lae_vinde": ["V", "SV", "NV"]
     },
-    "Knudshoved / Nyborg (Østfyn)": {
+    "Nyborg Knudshoved og Slipshavn (Østfyn)": {
         "coords": "55.297° N, 10.853° E",
         "met_station": "06126",      # Vind: Årslev
         "ocean_level_st": "28234",   # Vandstand: Slipshavn
@@ -75,7 +75,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 1.05em;
-    color: #f8fafc; /* Lysere tekstfarve */
+    color: #f8fafc; 
     font-weight: 600;
     letter-spacing: 0.3px;
 }
@@ -175,7 +175,8 @@ def hent_dmi_met(station_id):
         print(f"Fejl ved hentning af vejr for {station_id}: {e}")
     return None
 
-def hent_dmi_ocean_historik(station_id, target_param, limit=50):
+def hent_dmi_ocean_historik(station_id, limit=50):
+    """Henter vandstand historik og prøver automatisk både sealev_ln og sea_reg som parameterId"""
     params = {"stationId": station_id, "limit": limit}
     try:
         res = requests.get(OCEAN_URL, params=params, timeout=10)
@@ -183,6 +184,10 @@ def hent_dmi_ocean_historik(station_id, target_param, limit=50):
             features = res.json().get("features", [])
             vals = []
             times = []
+            
+            tilgaengelige_params = set(item["properties"]["parameterId"] for item in features if "parameterId" in item["properties"])
+            target_param = "sea_reg" if "sea_reg" in tilgaengelige_params else "sealev_ln"
+
             for item in features:
                 props = item["properties"]
                 if props["parameterId"] == target_param:
@@ -213,8 +218,19 @@ def hent_dmi_ocean_historik(station_id, target_param, limit=50):
     return [], []
 
 def hent_dmi_ocean_val(station_id, target_param):
-    vals, _ = hent_dmi_ocean_historik(station_id, target_param, limit=1)
-    return vals[0] if vals else "N/A"
+    params = {"stationId": station_id, "limit": 10}
+    try:
+        res = requests.get(OCEAN_URL, params=params, timeout=10)
+        if res.status_code == 200:
+            for item in res.json().get("features", []):
+                props = item["properties"]
+                if props["parameterId"] == target_param:
+                    val = props.get("value")
+                    if val is not None:
+                        return val
+    except requests.RequestException:
+        pass
+    return "N/A"
 
 def evaluer_kyst(spot_navn, coords, met_data, vandstand_vals, vandstand_tider, temp, lae_vinde):
     hastighed = met_data.get("wind_speed", 0) if met_data else 0
@@ -273,7 +289,7 @@ def main():
     
     for spot_navn, info in SPOTS.items():
         met_data = hent_dmi_met(info["met_station"])
-        vals, times = hent_dmi_ocean_historik(info["ocean_level_st"], "sealev_ln", limit=50)
+        vals, times = hent_dmi_ocean_historik(info["ocean_level_st"], limit=50)
         temp = hent_dmi_ocean_val(info["ocean_temp_st"], "tw")
         
         vurdering = evaluer_kyst(spot_navn, info["coords"], met_data, vals, times, temp, info["lae_vinde"])
@@ -412,7 +428,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret uden nedtælling ({nu}).")
+    print(f"Succes! index.html blev genereret uden fejl ({nu}).")
 
 if __name__ == "__main__":
     main()
