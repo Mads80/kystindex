@@ -44,7 +44,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
 .header-container { text-align: center; margin-top: 15px; margin-bottom: 5px; }
 
-/* Nyt bredt banner-logo */
 .logo { 
     width: 100%;
     max-width: 520px;
@@ -53,16 +52,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     margin: 0 auto;
 }
 
-/* Tidsstempel i toppen */
 .timestamp-top { 
     text-align: center; 
     color: #94a3b8; 
     font-size: 0.9em; 
-    margin-bottom: 15px; 
+    margin-bottom: 20px; 
     margin-top: 10px; 
+    line-height: 1.4;
+}
+.timestamp-top p {
+    margin: 0 0 5px 0;
+}
+.timestamp-top strong {
+    color: #f8fafc;
+    font-weight: 500;
 }
 
-/* Info-boks med lysere tekst og uden emoji */
 .quick-overview {
     background: #1e293b;
     border-radius: 12px;
@@ -82,14 +87,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .quick-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
+
 .quick-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; 
+    align-items: flex-start;
     background: #0f172a;
-    padding: 10px 14px;
+    padding: 12px 14px;
     border-radius: 8px;
     text-decoration: none;
     color: #f8fafc;
@@ -105,8 +111,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .quick-item.warning { border-left-color: #f97316; }
 .quick-item.bad { border-left-color: #ef4444; }
 
-.quick-spot-name { font-weight: 600; font-size: 0.95em; }
-.quick-spot-status { font-size: 0.9em; color: #94a3b8; }
+.quick-spot-name { 
+    font-weight: 600; 
+    font-size: 0.95em; 
+    margin-bottom: 4px; 
+    line-height: 1.3;
+}
+.quick-spot-status { 
+    font-size: 0.9em; 
+    color: #94a3b8; 
+}
 
 .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 6px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); scroll-margin-top: 20px; }
 .card h2 { margin-top: 0; margin-bottom: 2px; font-size: 1.4em; }
@@ -151,6 +165,42 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .footer-container .dmi-link a:hover {
     text-decoration: underline;
 }
+
+/* Back to Top Knap - Skubbet fri af kassen */
+#scrollToTopBtn {
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    z-index: 99; 
+    border: none; 
+    outline: none; 
+    background-color: #38bdf8; 
+    color: #0f172a; 
+    cursor: pointer; 
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; 
+    font-size: 20px; 
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+    transition: background-color 0.2s, transform 0.2s;
+    
+    /* PC: Skubbet helt uden for den 750px brede max-width container */
+    left: 50%;
+    margin-left: 400px; 
+}
+#scrollToTopBtn:hover {
+    background-color: #0284c7; 
+    transform: scale(1.05);
+}
+/* Mobil / Tablets under 900px: Låser knappen til skærmens kant, så den ikke ryger uden for skærmen */
+@media (max-width: 900px) {
+    #scrollToTopBtn {
+        left: auto;
+        right: 20px;
+        margin-left: 0;
+    }
+}
 """
 
 def grader_til_kompas(grader):
@@ -176,7 +226,6 @@ def hent_dmi_met(station_id):
     return None
 
 def hent_dmi_ocean_historik(station_id, limit=50):
-    """Henter vandstand historik og prøver automatisk både sealev_ln og sea_reg som parameterId"""
     params = {"stationId": station_id, "limit": limit}
     try:
         res = requests.get(OCEAN_URL, params=params, timeout=10)
@@ -385,7 +434,6 @@ def main():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Genindlæser automatisk siden hvert 15. minut -->
         <meta http-equiv="refresh" content="900">
         <title>ErKystenKlar.dk</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -395,14 +443,14 @@ def main():
     </head>
     <body>
         <div class="header-container">
-            <!-- Logo med cache-busting (?v={nu}) -->
             <img src="logo.png?v={nu}" alt="ErKystenKlar.dk" class="logo">
         </div>
         
-        <!-- Tidsstempel i toppen -->
-        <div class="timestamp-top">Opdateret: {nu}</div>
+        <div class="timestamp-top">
+            <p>Data hentes automatisk hvert 10. minut, direkte i takt med DMI's live-opdateringer.</p>
+            <strong>Seneste opdatering: {nu}</strong>
+        </div>
 
-        <!-- Om side / hurtig oversigts-boks -->
         <div class="quick-overview">
             <h3>Aktuelle vejr- og havdata fra DMI – tilpasset til de fynske kyststræk.</h3>
             <div class="quick-list">
@@ -412,14 +460,24 @@ def main():
         
         {cards_html}
 
-        <!-- Samlet flexbox-footer med copyright og DMI-link -->
         <div class="footer-container">
             <div class="footer-left">© 2026 ErKystenKlar.dk</div>
             <div class="dmi-link">Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a></div>
         </div>
 
+        <button id="scrollToTopBtn" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}})" title="Gå til toppen">&#8593;</button>
+
         <script>
             {chart_scripts}
+
+            let mybutton = document.getElementById("scrollToTopBtn");
+            window.onscroll = function() {{
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {{
+                    mybutton.style.display = "block";
+                }} else {{
+                    mybutton.style.display = "none";
+                }}
+            }};
         </script>
     </body>
     </html>
@@ -428,7 +486,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret uden fejl ({nu}).")
+    print(f"Succes! index.html blev genereret med rettet placering af pil op ({nu}).")
 
 if __name__ == "__main__":
     main()
