@@ -1,0 +1,55 @@
+name: Opdater og Udgiv Kystindex
+
+on:
+  # Kør automatisk hvert 15. minut
+  schedule:
+    - cron: '*/15 * * * *'
+  
+  # Gør det muligt at starte den manuelt også
+  workflow_dispatch:
+
+# Sæt tilladelser op til GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Sørg for at kun én deployment kører ad gangen
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hent kildekode
+        uses: actions/checkout@v4
+
+      - name: Sæt Python op
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Installer afhængigheder
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Kør generator-script (laver index.html)
+        run: python generate_html.py
+
+      - name: Konfigurer GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload filer til deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # Sender både index.html, logo.png m.m. af sted
+
+      - name: Udgiv til GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
