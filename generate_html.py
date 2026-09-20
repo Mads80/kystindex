@@ -52,20 +52,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     margin: 0 auto;
 }
 
+/* Opdateret topsektion med ny titel */
 .timestamp-top { 
     text-align: center; 
-    color: #94a3b8; 
-    font-size: 0.9em; 
     margin-bottom: 20px; 
     margin-top: 10px; 
-    line-height: 1.4;
 }
-.timestamp-top p {
-    margin: 0 0 5px 0;
-}
-.timestamp-top strong {
+.timestamp-top h2 {
     color: #f8fafc;
-    font-weight: 500;
+    font-size: 1.15em;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    letter-spacing: 0.3px;
+}
+.timestamp-top .update-time {
+    color: #94a3b8;
+    font-size: 0.9em;
 }
 
 .quick-overview {
@@ -76,13 +78,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
-.quick-overview h3 {
+/* Passiv info tekst erstatter den gamle h3 */
+.quick-overview .passive-info {
     margin-top: 0;
     margin-bottom: 15px;
-    font-size: 1.05em;
-    color: #f8fafc; 
-    font-weight: 600;
-    letter-spacing: 0.3px;
+    font-size: 0.9em;
+    color: #94a3b8; 
+    line-height: 1.4;
 }
 .quick-list {
     display: flex;
@@ -142,7 +144,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .status { font-size: 1.1em; margin-top: 10px; }
 .note { color: #94a3b8; font-style: italic; font-size: 0.95em; line-height: 1.4; }
 
-/* Flexbox-footer med copyright og DMI-link */
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -166,7 +167,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     text-decoration: underline;
 }
 
-/* Back to Top Knap - Skubbet fri af kassen */
 #scrollToTopBtn {
     display: none; 
     position: fixed; 
@@ -185,7 +185,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     box-shadow: 0 4px 6px rgba(0,0,0,0.4);
     transition: background-color 0.2s, transform 0.2s;
     
-    /* PC: Skubbet helt uden for den 750px brede max-width container */
     left: 50%;
     margin-left: 400px; 
 }
@@ -193,7 +192,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     background-color: #0284c7; 
     transform: scale(1.05);
 }
-/* Mobil / Tablets under 900px: Låser knappen til skærmens kant, så den ikke ryger uden for skærmen */
 @media (max-width: 900px) {
     #scrollToTopBtn {
         left: auto;
@@ -446,13 +444,16 @@ def main():
             <img src="logo.png?v={nu}" alt="ErKystenKlar.dk" class="logo">
         </div>
         
+        <!-- Fynske kyst- og vejrforhold titel lagt ind her oppe -->
         <div class="timestamp-top">
-            <p>Data hentes automatisk hvert 10. minut, direkte i takt med DMI's live-opdateringer.</p>
-            <strong>Seneste opdatering: {nu}</strong>
+            <h2>Fynske kyst- og vejrforhold</h2>
+            <div class="update-time">Seneste opdatering: {nu}</div>
         </div>
 
+        <!-- Om side / hurtig oversigts-boks -->
         <div class="quick-overview">
-            <h3>Aktuelle vejr- og havdata fra DMI – tilpasset til de fynske kyststræk.</h3>
+            <!-- 10 minutters teksten som passiv grå tekst -->
+            <p class="passive-info">Data hentes automatisk hvert 10. minut, direkte i takt med DMI's live-opdateringer.</p>
             <div class="quick-list">
                 {overview_html}
             </div>
@@ -486,7 +487,7 @@ def main():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(full_html)
     
-    print(f"Succes! index.html blev genereret med rettet placering af pil op ({nu}).")
+    print(f"Succes! index.html blev genereret med ombyttede tekster og tilpasset design ({nu}).")
 
 if __name__ == "__main__":
     main()
