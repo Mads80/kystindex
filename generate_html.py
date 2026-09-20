@@ -296,7 +296,7 @@ def main():
     </head>
     <body>
         <div class="header-container">
-            <img src="logo.png" alt="KYSTINDEX" class="logo">
+            <img src="logo.png?v={nu}" alt="KYSTINDEX" class="logo">
         </div>
         <div class="timestamp">Opdateret: {nu}</div>
         
