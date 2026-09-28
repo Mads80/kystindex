@@ -1,16 +1,12 @@
 name: Opdater og Udgiv Kystindex
 
 on:
-  # Kør automatisk hvert 15. minut
-  schedule:
-    - cron: '*/10 * * * *'
-  
-  # Gør det muligt at starte den manuelt også
+  # Køres udefra (f.eks. fra cron-job.org) eller manuelt
   workflow_dispatch:
   
-# Sæt tilladelser op til GitHub Pages
+# Sæt tilladelser op til både at skrive til kildekode og GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -41,6 +37,13 @@ jobs:
 
       - name: Kør generator-script (laver index.html)
         run: python generate_html.py
+
+      - name: Commit og push opdateret index.html
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --staged --quiet || (git commit -m "Auto-update index.html [skip ci]" && git push)
 
       - name: Konfigurer GitHub Pages
         uses: actions/configure-pages@v4
