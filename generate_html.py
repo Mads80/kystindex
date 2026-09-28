@@ -18,7 +18,7 @@ SPOTS = {
         "coords": "55.466° N, 10.658° E",
         "met_station": "06120",      # Vind: Odense Lufthavn
         "ocean_level_st": "9020401", # Vandstand: Kerteminde Havn I (bruger sea_reg)
-        "ocean_temp_st": "9020401",  # Temp: Kerteminde Havn I
+        "ocean_temp_st": "28231",    # Temp: Slipshavn II
         "lae_vinde": ["V", "SV", "NV"]
     },
     "Nyborg Knudshoved og Slipshavn (Østfyn)": {
