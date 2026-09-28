@@ -454,7 +454,7 @@ def main():
         <!-- Om side / hurtig oversigts-boks -->
         <div class="quick-overview">
             <!-- 10 minutters teksten som passiv grå tekst -->
-            <p class="passive-info">Data hentes automatisk hvert 10. minut, direkte i takt med DMI's live-opdateringer.</p>
+            <p class="passive-info">Der hentes automatisk nye data fra DMI hvert 15. minut.</p>
             <div class="quick-list">
                 {overview_html}
             </div>
