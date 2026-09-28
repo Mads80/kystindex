@@ -433,7 +433,7 @@ def main():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="refresh" content="900">
-        <title>ErKystenKlar.dk</title>
+        <title>Kystindex.dk</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
 {CSS}
@@ -441,7 +441,7 @@ def main():
     </head>
     <body>
         <div class="header-container">
-            <img src="logo.png?v={nu}" alt="ErKystenKlar.dk" class="logo">
+            <img src="logo.png?v={nu}" alt="Kystindex.dk" class="logo">
         </div>
         
         <!-- Fynske kyst- og vejrforhold titel lagt ind her oppe -->
@@ -462,7 +462,7 @@ def main():
         {cards_html}
 
         <div class="footer-container">
-            <div class="footer-left">© 2026 ErKystenKlar.dk</div>
+            <div class="footer-left">© 2026 Kystindex.dk.dk</div>
             <div class="dmi-link">Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a></div>
         </div>
 
