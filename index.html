@@ -174,14 +174,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     </head>
     <body>
         <div class="header-container">
-            <img src="logo.png?v=06-10-2026 kl. 16:16" alt="Kystindex.dk" class="logo">
+            <img src="logo.png?v=06-10-2026 kl. 16:31" alt="Kystindex.dk" class="logo">
         </div>
         
         <!-- Fynske kyst- og vejrforhold titel lagt ind her oppe -->
         <div class="timestamp-top">
             <h1>kystindex.dk</h1>
             <h2>Fynske kyst- og vejrforhold</h2>
-            <div class="update-time">Seneste opdatering: 06-10-2026 kl. 16:16</div>
+            <div class="update-time">Seneste opdatering: 06-10-2026 kl. 16:31</div>
         </div>
 
         <!-- Om side / hurtig oversigts-boks -->
@@ -191,23 +191,23 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
             <div class="quick-list">
                 
         <a href="#spot-0" class="quick-item optimal">
-            <span class="quick-spot-name">📍 Helnæs Fyr og Torø (Sydvestfyn)</span>
-            <span class="quick-spot-status">🔥 OPTIMAL (Læ / Sidevind)</span>
-        </a>
-        
-        <a href="#spot-1" class="quick-item optimal">
             <span class="quick-spot-name">📍 Kerteminde (Østfyn)</span>
             <span class="quick-spot-status">🔥 OPTIMAL (Læ / Sidevind)</span>
         </a>
         
-        <a href="#spot-2" class="quick-item optimal">
+        <a href="#spot-1" class="quick-item optimal">
             <span class="quick-spot-name">📍 Nyborg Knudshoved og Slipshavn (Østfyn)</span>
             <span class="quick-spot-status">🔥 OPTIMAL (Læ / Sidevind)</span>
         </a>
         
-        <a href="#spot-3" class="quick-item moderate">
+        <a href="#spot-2" class="quick-item moderate">
             <span class="quick-spot-name">📍 Flyvesandet (Nordfyn)</span>
             <span class="quick-spot-status">🟡 MODERAT (Pålandsvind)</span>
+        </a>
+        
+        <a href="#spot-3" class="quick-item warning">
+            <span class="quick-spot-name">📍 Helnæs Fyr og Torø (Sydvestfyn)</span>
+            <span class="quick-spot-status">⚠️ NOGENLUNDE (Blikstille)</span>
         </a>
         
             </div>
@@ -215,63 +215,63 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         
         
         <div id="spot-0" class="card optimal">
-            <h2>Helnæs Fyr og Torø (Sydvestfyn)</h2>
-            <div class="coords">📍 55.142° N, 9.998° E</div>
+            <h2>Kerteminde (Østfyn)</h2>
+            <div class="coords">📍 55.466° N, 10.658° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 0.35 m/s (stød 0.68 m/s) fra NØ</p>
-                <p><strong>Vandstand:</strong> 19.0 cm <span class="trend">(↑ Stigende)</span></p>
-                <p><strong>Vandtemp:</strong> 16.0 °C</p>
+                <p><strong>Vind:</strong> 3.09 m/s (stød 4.12 m/s) fra NV</p>
+                <p><strong>Vandstand:</strong> 35.0 cm <span class="trend">(↑ Stigende)</span></p>
+                <p><strong>Vandtemp:</strong> 16.1 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart0"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra NØ (0.35 m/s) giver fine, rolige kasteforhold. Vandstanden er +19.0 cm og **stigende**, hvilket ofte presser havørreden helt tæt på kysten. Optimalt til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted over det lave vand!</p>
+            <p class="note">Vind fra NV (3.09 m/s) giver fine, rolige kasteforhold. Vandstanden er +35.0 cm og **stigende**, hvilket ofte presser havørreden helt tæt på kysten. Optimalt til at sende en 14-16g line-thru (f.eks. en motoroil Zerling) afsted over det lave vand!</p>
         </div>
         
         <div id="spot-1" class="card optimal">
-            <h2>Kerteminde (Østfyn)</h2>
-            <div class="coords">📍 55.466° N, 10.658° E</div>
+            <h2>Nyborg Knudshoved og Slipshavn (Østfyn)</h2>
+            <div class="coords">📍 55.297° N, 10.853° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.6 m/s (stød 4.63 m/s) fra V</p>
-                <p><strong>Vandstand:</strong> 34.0 cm <span class="trend">(→ Uændret)</span></p>
+                <p><strong>Vind:</strong> 1.95 m/s (stød 3.49 m/s) fra V</p>
+                <p><strong>Vandstand:</strong> 30.0 cm <span class="trend">(→ Uændret)</span></p>
                 <p><strong>Vandtemp:</strong> 16.1 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart1"></canvas>
             </div>
             <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra V (3.6 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +34.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
+            <p class="note">Vind fra V (1.95 m/s) giver fine, rolige kasteforhold. Vandstanden er stabilt omkring +30.0 cm. Gode betingelser for at afsøge strækket med en 14-16g line-thru.</p>
         </div>
         
-        <div id="spot-2" class="card optimal">
-            <h2>Nyborg Knudshoved og Slipshavn (Østfyn)</h2>
-            <div class="coords">📍 55.297° N, 10.853° E</div>
+        <div id="spot-2" class="card moderate">
+            <h2>Flyvesandet (Nordfyn)</h2>
+            <div class="coords">📍 55.615° N, 10.297° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 2.68 m/s (stød 4.12 m/s) fra V</p>
-                <p><strong>Vandstand:</strong> 29.0 cm <span class="trend">(↓ Faldende)</span></p>
-                <p><strong>Vandtemp:</strong> 16.1 °C</p>
+                <p><strong>Vind:</strong> 3.09 m/s (stød 4.12 m/s) fra NV</p>
+                <p><strong>Vandstand:</strong> 35.0 cm <span class="trend">(↑ Stigende)</span></p>
+                <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart2"></canvas>
             </div>
-            <p class="status"><strong>Status:</strong> 🔥 OPTIMAL (Læ / Sidevind)</p>
-            <p class="note">Vind fra V (2.68 m/s) giver fine, rolige kasteforhold. Vandstanden er +29.0 cm og **faldende**. Fisken kan søge med ud mod rev og dybere kanten, så affisk skrænterne grundigt.</p>
+            <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
+            <p class="note">Vind fra NV (3.09 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Da vandet samtidig er **stigende** (+35.0 cm), er der gode chancer for fisk på det nære vand, selvom modvinden kan gøre kastene tunge.</p>
         </div>
         
-        <div id="spot-3" class="card moderate">
-            <h2>Flyvesandet (Nordfyn)</h2>
-            <div class="coords">📍 55.615° N, 10.297° E</div>
+        <div id="spot-3" class="card warning">
+            <h2>Helnæs Fyr og Torø (Sydvestfyn)</h2>
+            <div class="coords">📍 55.142° N, 9.998° E</div>
             <div class="info-list">
-                <p><strong>Vind:</strong> 3.6 m/s (stød 4.63 m/s) fra V</p>
-                <p><strong>Vandstand:</strong> 33.0 cm <span class="trend">(↑ Stigende)</span></p>
+                <p><strong>Vind:</strong> 0.22 m/s (stød 0.68 m/s) fra N</p>
+                <p><strong>Vandstand:</strong> 19.0 cm <span class="trend">(↑ Stigende)</span></p>
                 <p><strong>Vandtemp:</strong> 16.0 °C</p>
             </div>
             <div class="chart-container">
                 <canvas id="waterChart3"></canvas>
             </div>
-            <p class="status"><strong>Status:</strong> 🟡 MODERAT (Pålandsvind)</p>
-            <p class="note">Vind fra V (3.6 m/s) står direkte ind på kysten og skaber god sløring og fødeemner i vandet. Da vandet samtidig er **stigende** (+33.0 cm), er der gode chancer for fisk på det nære vand, selvom modvinden kan gøre kastene tunge.</p>
+            <p class="status"><strong>Status:</strong> ⚠️ NOGENLUNDE (Blikstille)</p>
+            <p class="note">Næsten blikstille (0.22 m/s). Vandet er sandsynligvis meget klart, hvilket kan gøre havørreden sky. Sørg for at liste langs kanten og kaste langt. Vandstand: +19.0 cm (Stigende).</p>
         </div>
         
 
@@ -289,9 +289,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx0, {
             type: 'line',
             data: {
-                labels: ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10"],
+                labels: ["08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10", "16:20"],
                 datasets: [{
-                    data: [6.0, 7.0, 7.0, 7.0, 6.0, 7.0, 7.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0, 6.0, 7.0, 8.0, 8.0, 8.0, 9.0, 10.0, 11.0, 11.0, 12.0, 12.0, 13.0, 14.0, 14.0, 14.0, 15.0, 15.0, 14.0, 15.0, 15.0, 16.0, 16.0, 16.0, 16.0, 17.0, 17.0, 17.0, 18.0, 18.0, 19.0],
+                    data: [57.0, 58.0, 60.0, 60.0, 61.0, 61.0, 61.0, 63.0, 63.0, 64.0, 64.0, 63.0, 62.0, 62.0, 63.0, 63.0, 62.0, 61.0, 60.0, 59.0, 58.0, 58.0, 56.0, 55.0, 54.0, 53.0, 51.0, 49.0, 48.0, 47.0, 45.0, 44.0, 43.0, 42.0, 40.0, 39.0, 37.0, 37.0, 36.0, 35.0, 34.0, 35.0, 34.0, 34.0, 33.0, 33.0, 33.0, 34.0, 34.0, 35.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
@@ -332,9 +332,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10"],
+                labels: ["13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10", "16:20"],
                 datasets: [{
-                    data: [56.0, 57.0, 58.0, 60.0, 60.0, 61.0, 61.0, 61.0, 63.0, 63.0, 64.0, 64.0, 63.0, 62.0, 62.0, 63.0, 63.0, 62.0, 61.0, 60.0, 59.0, 58.0, 58.0, 56.0, 55.0, 54.0, 53.0, 51.0, 49.0, 48.0, 47.0, 45.0, 44.0, 43.0, 42.0, 40.0, 39.0, 37.0, 37.0, 36.0, 35.0, 34.0, 35.0, 34.0, 34.0, 33.0, 33.0, 33.0, 34.0, 34.0],
+                    data: [40.0, 39.0, 37.0, 36.0, 35.0, 34.0, 33.0, 32.0, 32.0, 31.0, 30.0, 30.0, 30.0, 30.0, 29.0, 29.0, 30.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
@@ -375,9 +375,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx2, {
             type: 'line',
             data: {
-                labels: ["13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10"],
+                labels: ["08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10", "16:20"],
                 datasets: [{
-                    data: [41.0, 40.0, 39.0, 37.0, 36.0, 35.0, 34.0, 33.0, 32.0, 32.0, 31.0, 30.0, 30.0, 30.0, 30.0, 29.0, 29.0],
+                    data: [76.0, 78.0, 79.0, 80.0, 81.0, 82.0, 81.0, 80.0, 80.0, 78.0, 77.0, 76.0, 74.0, 74.0, 71.0, 69.0, 67.0, 64.0, 62.0, 61.0, 56.0, 54.0, 52.0, 50.0, 47.0, 45.0, 43.0, 40.0, 38.0, 36.0, 35.0, 32.0, 32.0, 30.0, 28.0, 29.0, 28.0, 28.0, 28.0, 27.0, 28.0, 28.0, 29.0, 29.0, 29.0, 31.0, 32.0, 33.0, 33.0, 35.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
@@ -418,9 +418,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
         new Chart(ctx3, {
             type: 'line',
             data: {
-                labels: ["08:00", "08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10"],
+                labels: ["08:10", "08:20", "08:30", "08:40", "08:50", "09:00", "09:10", "09:20", "09:30", "09:40", "09:50", "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30", "11:40", "11:50", "12:00", "12:10", "12:20", "12:30", "12:40", "12:50", "13:00", "13:10", "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", "15:40", "15:50", "16:00", "16:10", "16:20"],
                 datasets: [{
-                    data: [75.0, 76.0, 78.0, 79.0, 80.0, 81.0, 82.0, 81.0, 80.0, 80.0, 78.0, 77.0, 76.0, 74.0, 74.0, 71.0, 69.0, 67.0, 64.0, 62.0, 61.0, 56.0, 54.0, 52.0, 50.0, 47.0, 45.0, 43.0, 40.0, 38.0, 36.0, 35.0, 32.0, 32.0, 30.0, 28.0, 29.0, 28.0, 28.0, 28.0, 27.0, 28.0, 28.0, 29.0, 29.0, 29.0, 31.0, 32.0, 33.0, 33.0],
+                    data: [7.0, 7.0, 7.0, 6.0, 7.0, 7.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0, 6.0, 7.0, 8.0, 8.0, 8.0, 9.0, 10.0, 11.0, 11.0, 12.0, 12.0, 13.0, 14.0, 14.0, 14.0, 15.0, 15.0, 14.0, 15.0, 15.0, 16.0, 16.0, 16.0, 16.0, 17.0, 17.0, 17.0, 18.0, 18.0, 19.0, 19.0],
                     borderColor: '#38bdf8',
                     borderWidth: 2,
                     pointRadius: 0,
