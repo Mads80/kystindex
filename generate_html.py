@@ -465,7 +465,7 @@ def main():
         {cards_html}
 
         <div class="footer-container">
-            <div class="footer-left">© 2026 kystindex.dk.dk</div>
+            <div class="footer-left">© 2026 kystindex.dk</div>
             <div class="dmi-link">Data leveret af <a href="https://www.dmi.dk/" target="_blank">DMI Open Data</a></div>
         </div>
 
