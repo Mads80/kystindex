@@ -8,3 +8,5 @@ Henter live-data fra DMI, analyserer kystforholdene (vind, vandstand og vandtemp
 * **Data-fetch & Generering:** Et Python-script (`generate_html.py`) henter data via DMI Open Data og bygger `index.html`.
 * **Automatisering:** Workflowet trigges eksternt via et eksternt cron-job eller manuelt (`workflow_dispatch`).
 * **Udgivelse:** Siden udgives automatisk via **GitHub Pages**, og ændringer committes direkte til `main`-branchen.
+
+http://kystindex.dk
