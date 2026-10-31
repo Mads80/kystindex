@@ -432,7 +432,7 @@ def main():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="google-site-verification" content="Z1ho3A0FdQ8x0ZKifr6l3fFKNZbfMCOiVjSa8JIEOdo" />
+        
         <meta name="description" content="Se de seneste fynske kyst- og vejrforhold. Kystindex giver dig det fulde overblik.">
         <meta http-equiv="refresh" content="900">
         <title>kystindex.dk</title>
